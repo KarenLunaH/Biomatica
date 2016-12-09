@@ -167,6 +167,7 @@ public class Paciente implements Serializable {
     private List<Imagenes> imagenesList;
 
     public Paciente() {
+        this.idDireccion = new Direccion();
     }
 
     public Paciente(Integer idPaciente) {
@@ -213,7 +214,7 @@ public class Paciente implements Serializable {
     }
 
     public void setRfc(String rfc) {
-        this.rfc = rfc;
+        this.rfc = rfc.toUpperCase();
     }
 
     public String getNombres() {
@@ -418,7 +419,8 @@ public class Paciente implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Paciente[ idPaciente=" + idPaciente + " ]";
+        return this.nombres + " " + this.apellidoPaterno + " " + this.apellidoMaterno;
     }
+    
     
 }

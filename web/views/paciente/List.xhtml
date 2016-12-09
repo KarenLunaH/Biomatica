@@ -1,0 +1,356 @@
+<ui:composition template="/WEB-INF/admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="title">
+        Pacientes
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{pacienteController.listar()}"/>
+        </f:metadata>
+
+        <h:form id="form">
+            <p:dataTable id="data" value="#{pacienteController.pacientes}" var="paciente">
+                
+                <f:facet name="header">
+                    Pacientes
+                </f:facet>                 
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{paciente}"/>
+                </p:column>   
+                <p:column headerText="CURP" filterBy="#{paciente.curp}">
+                    <p:outputLabel value="#{paciente.curp}"/>
+                </p:column>  
+                <p:column headerText="RFC" filterBy="#{paciente.rfc}">
+                    <p:outputLabel value="#{paciente.rfc}"/>
+                </p:column>
+                <p:column headerText="Fecha de nacimiento">
+                    <p:outputLabel value="#{paciente.fechaNacimiento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="Sexo">
+                    <p:outputLabel value="#{paciente.sexo}"/>
+                </p:column>
+                <p:column headerText="Editar">
+                    <p:commandButton value="Editar" actionListener="#{pacienteController.findForEdit(paciente.idPaciente)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                </p:column>
+               
+                
+            </p:dataTable>
+            <p:commandButton value="Registrar" actionListener="#{pacienteController.limpiarformulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+        </h:form> 
+
+
+        <p:dialog header="Nuevo paciente" widgetVar="widgetDatos" id="dialogDatos" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre(s)" for="Nombre"/>
+                            <p:inputText id="Nombre" value="#{pacienteController.paciente.nombres}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Apellido Paterno" for="ApellidoPaterno"/>
+                            <p:inputText id="ApellidoPaterno" value="#{pacienteController.paciente.apellidoPaterno}" required="true" label="Apellido Paterno"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Apellido Materno" for="ApellidoMaterno"/>
+                            <p:inputText id="ApellidoMaterno" value="#{pacienteController.paciente.apellidoMaterno}" required="true" label="Apellido Materno"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="FechaNacimiento" value="Fecha de nacimiento:" />
+                            <p:calendar id="FechaNacimiento" navigator="true" value="#{pacienteController.paciente.fechaNacimiento}" required="true" label="Fecha de Nacimiento"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Sexo"/>
+                            <p:selectOneMenu id="Sexo" value="#{pacienteController.paciente.sexo}" required="true" label="Sexo">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="CURP" for="CURP"/>
+                            <p:inputMask mask="aaaa999999aaaaaa99" id="CURP" value="#{pacienteController.paciente.curp}" required="true" >
+                                <p:ajax event="keyup" listener="#{pacienteController.updateRFC()}" update="rfcU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="RFC: "/>
+                            <p:outputLabel id="rfcU" value="#{pacienteController.paciente.rfc}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo de sangre"/>
+                            <p:selectOneMenu id="TipoSangre" value="#{pacienteController.paciente.tipoDeSangre}" required="true" label="Tipo de sangre">
+                                <f:selectItem itemLabel="A+" itemValue="A+" />
+                                <f:selectItem itemLabel="A-" itemValue="A-" />
+                                <f:selectItem itemLabel="B+" itemValue="B+" />
+                                <f:selectItem itemLabel="B-" itemValue="B-" />
+                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
+                                <f:selectItem itemLabel="O+" itemValue="O+" />
+                                <f:selectItem itemLabel="O-" itemValue="O-" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Estado civil"/>
+                            <p:selectOneMenu id="EstadoCivil" value="#{pacienteController.paciente.estadoCivil}" required="true" label="Tipo de sangre">
+                                <f:selectItem itemLabel="Casado" itemValue="Casado" />
+                                <f:selectItem itemLabel="Union Libre" itemValue="Union Libre" />
+                                <f:selectItem itemLabel="Comprometido" itemValue="Comprometido" />
+                                <f:selectItem itemLabel="Divorciado" itemValue="Divorciado" />
+                                <f:selectItem itemLabel="Soltero" itemValue="Soltero" />
+                                <f:selectItem itemLabel="Viudo" itemValue="Viudo" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Origen: " for="Origen"/>
+                            <p:inputText id="Origen" value="#{pacienteController.paciente.origen}" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Religión"/>
+                            <p:selectOneMenu value="#{pacienteController.paciente.religion}">
+                                    <f:selectItem itemLabel="Católico" itemValue="Católico"/>
+                                    <f:selectItem itemLabel="Judio" itemValue="Judio"/>
+                                    <f:selectItem itemLabel="Islam" itemValue="Islam"/>
+                                    <f:selectItem itemLabel="Otras religiones" itemValue="Otras religiones"/>
+                                    <f:selectItem itemLabel="Protestante o Evangélico" itemValue="Protestante o Evangélico"/>
+                                    <f:selectItem itemLabel="Ninguna" itemValue="Ninguna"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Ocupación: " for="Ocupación"/>
+                            <p:inputText id="Ocupación" value="#{pacienteController.paciente.ocupacion}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Código Postal: " for="CP"/>
+                            <p:inputMask mask="99999" id="CP" value="#{pacienteController.paciente.idDireccion.codigoPostal}" required="true">
+                                <p:ajax event="keyup" listener="#{pacienteController.findDireccion()}" update="direccionU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Datos de dirección: "/>
+                            <p:outputLabel id="direccionU" value="#{pacienteController.paciente.idDireccion}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle: " for="Calle"/>
+                            <p:inputText id="Calle" value="#{pacienteController.paciente.calle}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Numero Exterior: " for="NumeroExterior"/>
+                            <p:inputText id="NumeroExterior" value="#{pacienteController.paciente.numeroExterior}" required="true" label="Numero Exterior"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Numero Interior: " />
+                            <p:inputText value="#{pacienteController.paciente.numeroInterior}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Teléfono:" for="Teléfono"/>
+                            <p:inputMask mask="(99) 999999" id="Teléfono" value="#{pacienteController.paciente.telefono}" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Celular:" for="Celular"/>
+                            <p:inputMask mask="(99) 9999-9999" id="Celular" value="#{pacienteController.paciente.celular}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Correo:"/>
+                            <p:inputText value="#{pacienteController.paciente.email}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Contacto de emergencia:" for="Contacto"/>
+                            <p:inputTextarea label="Contacto de emergencia" id="Contacto" value="#{pacienteController.paciente.contactoEmergencia}" required="true"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Registrar" actionListener="#{pacienteController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
+            </h:form>
+
+        </p:dialog>
+        
+        
+        
+        <p:dialog header="Editar paciente" widgetVar="widgetDatos2" id="dialogDatos2" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre(s)" for="Nombre"/>
+                            <p:inputText id="Nombre" value="#{pacienteController.paciente.nombres}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Apellido Paterno" for="ApellidoPaterno"/>
+                            <p:inputText id="ApellidoPaterno" value="#{pacienteController.paciente.apellidoPaterno}" required="true" label="Apellido Paterno"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Apellido Materno" for="ApellidoMaterno"/>
+                            <p:inputText id="ApellidoMaterno" value="#{pacienteController.paciente.apellidoMaterno}" required="true" label="Apellido Materno"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="FechaNacimiento" value="Fecha de nacimiento:" />
+                            <p:calendar id="FechaNacimiento" navigator="true" value="#{pacienteController.paciente.fechaNacimiento}" required="true" label="Fecha de Nacimiento"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Sexo"/>
+                            <p:selectOneMenu id="Sexo" value="#{pacienteController.paciente.sexo}" required="true" label="Sexo">
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="CURP" for="CURP"/>
+                            <p:inputMask mask="aaaa999999aaaaaa99" id="CURP" value="#{pacienteController.paciente.curp}" required="true" >
+                                <p:ajax event="keyup" listener="#{pacienteController.updateRFC()}" update="rfcU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="RFC: "/>
+                            <p:outputLabel id="rfcU" value="#{pacienteController.paciente.rfc}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo de sangre"/>
+                            <p:selectOneMenu id="TipoSangre" value="#{pacienteController.paciente.tipoDeSangre}" required="true" label="Tipo de sangre">
+                                <f:selectItem itemLabel="A+" itemValue="A+" />
+                                <f:selectItem itemLabel="A-" itemValue="A-" />
+                                <f:selectItem itemLabel="B+" itemValue="B+" />
+                                <f:selectItem itemLabel="B-" itemValue="B-" />
+                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
+                                <f:selectItem itemLabel="O+" itemValue="O+" />
+                                <f:selectItem itemLabel="O-" itemValue="O-" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Estado civil"/>
+                            <p:selectOneMenu id="EstadoCivil" value="#{pacienteController.paciente.estadoCivil}" required="true" label="Tipo de sangre">
+                                <f:selectItem itemLabel="Casado" itemValue="Casado" />
+                                <f:selectItem itemLabel="Union Libre" itemValue="Union Libre" />
+                                <f:selectItem itemLabel="Comprometido" itemValue="Comprometido" />
+                                <f:selectItem itemLabel="Divorciado" itemValue="Divorciado" />
+                                <f:selectItem itemLabel="Soltero" itemValue="Soltero" />
+                                <f:selectItem itemLabel="Viudo" itemValue="Viudo" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Origen: " for="Origen"/>
+                            <p:inputText id="Origen" value="#{pacienteController.paciente.origen}" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Religión"/>
+                            <p:selectOneMenu value="#{pacienteController.paciente.religion}">
+                                <f:selectItem itemLabel="Católico" itemValue="Católico"/>
+                                <f:selectItem itemLabel="Judio" itemValue="Judio"/>
+                                <f:selectItem itemLabel="Islam" itemValue="Islam"/>
+                                <f:selectItem itemLabel="Otras religiones" itemValue="Otras religiones"/>
+                                <f:selectItem itemLabel="Protestante o Evangélico" itemValue="Protestante o Evangélico"/>
+                                <f:selectItem itemLabel="Ninguna" itemValue="Ninguna"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Ocupación: " for="Ocupación"/>
+                            <p:inputText id="Ocupación" value="#{pacienteController.paciente.ocupacion}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Código Postal: " for="CP"/>
+                            <p:inputMask mask="99999" id="CP" value="#{pacienteController.paciente.idDireccion.codigoPostal}" required="true">
+                                <p:ajax event="keyup" listener="#{pacienteController.findDireccion()}" update="direccionU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Datos de dirección: "/>
+                            <p:outputLabel id="direccionU" value="#{pacienteController.paciente.idDireccion}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle: " for="Calle"/>
+                            <p:inputText id="Calle" value="#{pacienteController.paciente.calle}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Numero Exterior: " for="NumeroExterior"/>
+                            <p:inputText id="NumeroExterior" value="#{pacienteController.paciente.numeroExterior}" required="true" label="Numero Exterior"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Numero Interior: " />
+                            <p:inputText value="#{pacienteController.paciente.numeroInterior}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Teléfono:" for="Teléfono"/>
+                            <p:inputMask mask="(99) 999999" id="Teléfono" value="#{pacienteController.paciente.telefono}" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Celular:" for="Celular"/>
+                            <p:inputMask mask="(99) 9999-9999" id="Celular" value="#{pacienteController.paciente.celular}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Correo:"/>
+                            <p:inputText value="#{pacienteController.paciente.email}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Contacto de emergencia:" for="Contacto"/>
+                            <p:inputTextarea label="Contacto de emergencia" id="Contacto" value="#{pacienteController.paciente.contactoEmergencia}" required="true"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Actualizar" actionListener="#{pacienteController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
+            </h:form>
+
+        </p:dialog>
+        
+        
+        
+
+    </ui:define>
+</ui:composition>

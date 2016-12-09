@@ -225,4 +225,14 @@ public class Doctor implements Serializable {
         return "Models.Doctor[ idDoctor=" + idDoctor + " ]";
     }
     
+    public String nombreCompleto(){
+        return this.nombres + " " + this.apellidoPaterno + " " + this.apellidoMaterno;
+    }
+    
+    public void limpiar(){
+        this.nombres = this.apellidoMaterno = this.apellidoPaterno = 
+                this.telefono = this.celular = this.cedulaProfesional = this.email = 
+                this.password = this.especialidad = this.prefijo = "";
+    }
+    
 }

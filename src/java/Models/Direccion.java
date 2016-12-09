@@ -136,7 +136,7 @@ public class Direccion implements Serializable {
 
     @Override
     public String toString() {
-        return "Models.Direccion[ codigoPostal=" + codigoPostal + " ]";
+        return this.estado + ", " +this.municipio+ ", "+this.colonia;
     }
     
 }
