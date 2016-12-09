@@ -44,10 +44,39 @@
         
         <p:accordionPanel id="accordion">
             
-            <p:tab title="Antescedentes">
+            <p:tab id="antescedentesTab" title="Antescedentes">
+                 <h:form id="antescedentesForm">
+                     <p:panelGrid>
+                         <p:row>
+                             <p:column>
                 <p:outputLabel rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="No tiene antescedentes registrados"/>
-                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Tiene registrados"/>
-                <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes"/>
+                             </p:column>
+                         </p:row>
+                         <p:row>
+                             <p:column>
+                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Heredo-Familiares: #{pacienteController.antescedentesConsulta.heredoFam}"/>
+                             </p:column>
+                         </p:row>
+                         <p:row>
+                             <p:column>
+                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales Patológicos: #{pacienteController.antescedentesConsulta.persoPatologicos} "/>
+                 </p:column>
+                         </p:row>
+                         <p:row>
+                             <p:column>
+                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales no Patológicos: #{pacienteController.antescedentesConsulta.persoNoPato}"/>
+                            </p:column>
+                         </p:row>
+                         <p:row>
+                             <p:column>
+                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Gineco-Obstétricos: #{pacienteController.antescedentesConsulta.genecoObste} "/>
+                   </p:column>
+                         </p:row>
+                     </p:panelGrid>    
+                <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes" oncomplete="PF('widgetAntescedentes').show();" update=":dialogAntescedentes"/>
+                <p:commandButton actionListener="#{pacienteController.findAntescedentesEdit()}" rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Modificar antescedentes" oncomplete="PF('widgetAntescedentes2').show();" update=":dialogAntescedentes2"/>
+                
+                 </h:form>
             </p:tab>
             
             <p:tab title="Consultas">
@@ -191,6 +220,78 @@
                 <p:commandButton value="Editar" actionListener="#{pacienteController.editarMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento2').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
             </h:form>
         </p:dialog>
+        
+        
+        
+        
+        <p:dialog header="Registro de antescedentes " widgetVar="widgetAntescedentes" id="dialogAntescedentes" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Heredo-Familiares:" for="heredoFam"/>
+                             <p:inputTextarea id="heredoFam" value="#{pacienteController.antescedentes.heredoFam}" required="true" label="Heredo_Familiares"/>
+                        </p:column>  
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Peronales patológicos:" for="persoPatologicos"/>
+                             <p:inputTextarea id="persoPatologicos" value="#{pacienteController.antescedentes.persoPatologicos}" required="true" label="Personales patológicos"/>
+                        </p:column>  
+                    </p:row><p:row>
+                        <p:column>
+                             <p:outputLabel value="Personales no patológicos:" for="persoNoPato"/>
+                             <p:inputTextarea id="persoNoPato" value="#{pacienteController.antescedentes.persoNoPato}" required="true" label="Personales no patológicos"/>
+                        </p:column>  
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Gineco-Obstétricos:" for="ginecoObstetricos"/>
+                             <p:inputTextarea id="ginecoObstetricos" value="#{pacienteController.antescedentes.genecoObste}" required="true" label="Gineco-Obstétricos"/>
+                        </p:column>  
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Create" actionListener="#{pacienteController.crearAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes').hide();" update=":accordion:antescedentesForm"/>
+            </h:form>
+        </p:dialog>
+        
+        
+        
+        
+        <p:dialog header="Registro de antescedentes " widgetVar="widgetAntescedentes2" id="dialogAntescedentes2" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Heredo-Familiares:" for="heredoFam"/>
+                             <p:inputTextarea id="heredoFam" value="#{pacienteController.antescedentes.heredoFam}" required="true" label="Heredo_Familiares"/>
+                        </p:column>  
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Peronales patológicos:" for="persoPatologicos"/>
+                             <p:inputTextarea id="persoPatologicos" value="#{pacienteController.antescedentes.persoPatologicos}" required="true" label="Personales patológicos"/>
+                        </p:column>  
+                    </p:row><p:row>
+                        <p:column>
+                             <p:outputLabel value="Personales no patológicos:" for="persoNoPato"/>
+                             <p:inputTextarea id="persoNoPato" value="#{pacienteController.antescedentes.persoNoPato}" required="true" label="Personales no patológicos"/>
+                        </p:column>  
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                             <p:outputLabel value="Gineco-Obstétricos:" for="ginecoObstetricos"/>
+                             <p:inputTextarea id="ginecoObstetricos" value="#{pacienteController.antescedentes.genecoObste}" required="true" label="Gineco-Obstétricos"/>
+                        </p:column>  
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Edit" actionListener="#{pacienteController.editAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes2').hide();" update=":accordion:antescedentesForm"/>
+            </h:form>
+        </p:dialog>
+        
+        
         
     </ui:define>
 </ui:composition>

@@ -5,9 +5,11 @@
  */
 package Controllers;
 
+import Ejbs.AntescedentesFacadeLocal;
 import Ejbs.DireccionFacadeLocal;
 import Ejbs.MedicamentoFacadeLocal;
 import Ejbs.PacienteFacadeLocal;
+import Models.Antescedentes;
 import Models.Direccion;
 import Models.Medicamento;
 import Models.Paciente;
@@ -37,6 +39,8 @@ public class PacienteController implements Serializable{
     private Paciente paciente;
     private List<Paciente> pacientes;
     private Medicamento medicamento;
+    private Antescedentes antescedentes, antescedentesConsulta;
+   
     
     @EJB
     private DireccionFacadeLocal direccionEjb;
@@ -44,11 +48,35 @@ public class PacienteController implements Serializable{
     @EJB
     private MedicamentoFacadeLocal medicamentoEjb;
     
+    @EJB
+    private AntescedentesFacadeLocal antescedentesEjb;
+    
     @PostConstruct
     public void init(){
         this.paciente = new Paciente();
         this.pacientes = new ArrayList<Paciente>();
         this.medicamento = new Medicamento();//instanciamos medicamento
+        this.antescedentes = new Antescedentes();
+    }
+    
+    public void crearAntescedentes(){
+       this.antescedentes.setIdPaciente(paciente);
+        this.paciente.getAntescedentesList().add(antescedentes);
+        this.antescedentesEjb.create(antescedentes);
+        this.pacienteEjb.edit(paciente);
+        this.antescedentes=null;
+        this.antescedentes=new Antescedentes();
+        this.antescedentesConsulta = this.paciente.getAntescedentesList().get(0);
+    }
+    
+    public void findAntescedentesEdit(){
+        this.antescedentes=this.paciente.getAntescedentesList().get(0);
+    }
+    
+    public void editAntescedentes(){
+        this.antescedentesEjb.edit(antescedentes);
+        this.pacienteEjb.edit(paciente);
+        this.antescedentesConsulta = this.paciente.getAntescedentesList().get(0);
     }
     
     public void listar(){
@@ -170,6 +198,10 @@ public class PacienteController implements Serializable{
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         Object id = sessionMap.get("idPaciente");
         this.paciente = this.pacienteEjb.find(id);
+           this.antescedentesConsulta = new Antescedentes();
+        if(this.tieneRegistradoAntescedentes()){
+            this.antescedentesConsulta = this.paciente.getAntescedentesList().get(0);
+        }
     }
 
     /**
@@ -184,6 +216,34 @@ public class PacienteController implements Serializable{
      */
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
+    }
+
+    /**
+     * @return the antescedentes
+     */
+    public Antescedentes getAntescedentes() {
+        return antescedentes;
+    }
+
+    /**
+     * @param antescedentes the antescedentes to set
+     */
+    public void setAntescedentes(Antescedentes antescedentes) {
+        this.antescedentes = antescedentes;
+    }
+
+    /**
+     * @return the antescedentesConsulta
+     */
+    public Antescedentes getAntescedentesConsulta() {
+        return antescedentesConsulta;
+    }
+
+    /**
+     * @param antescedentesConsulta the antescedentesConsulta to set
+     */
+    public void setAntescedentesConsulta(Antescedentes antescedentesConsulta) {
+        this.antescedentesConsulta = antescedentesConsulta;
     }
     
     
