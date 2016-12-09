@@ -81,6 +81,8 @@ public class PacienteController implements Serializable{
     }
     
     public void eliminarMedicamento(Medicamento m){
+        this.paciente.getMedicamentoList().remove(m);
+        this.pacienteEjb.edit(paciente);
         this.medicamentoEjb.remove(m);
     }
     

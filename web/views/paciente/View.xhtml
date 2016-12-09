@@ -75,7 +75,7 @@
                          <!-- los dos puntos(:) significan acceder a un formulario fuera de este formulario!-->
                         </p:column>
                         <p:column headerText="Eliminar">
-                            <p:commandButton value="Eliminar" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="@form"/>
+                            <p:commandButton value="Eliminar" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="accordion:medicamentoForm"/>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton value="Registrar" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
