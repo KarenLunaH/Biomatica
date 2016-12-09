@@ -47,9 +47,139 @@
                 <p:outputLabel value="To do, hacer consultas form"/>
             </p:tab>
             <p:tab title="Lista de medicamento">
-                
+                <h:form id="medicamentoForm">
+                    <p:dataTable id="medicamentoTable" value="#{pacienteController.paciente.medicamentoList}" var="medicamento" paginator="true" rows="5">
+                        <f:facet name="header">
+                            Medicamentos del paciente.
+                        </f:facet>                 
+                        <p:column headerText="Nombre comercial">
+                            <p:outputLabel value="#{medicamento.nombreComercial}"/>
+                        </p:column>  
+                        <p:column headerText="Marca">
+                            <p:outputLabel value="#{medicamento.marca}"/>
+                        </p:column>  
+                        <p:column headerText="Descripción">
+                            <p:outputLabel value="#{medicamento.descripcion}"/>
+                        </p:column>  
+                        <p:column headerText="Presentación">
+                            <p:outputLabel value="#{medicamento.presentacion}"/>
+                        </p:column>  
+                        <p:column headerText="Nombre genérico">
+                            <p:outputLabel value="#{medicamento.nombreGenerico}"/>
+                        </p:column>  
+                        <p:column headerText="Contraindicaciones ">
+                            <p:outputLabel value="#{medicamento.contraIndicaciones}"/>
+                        </p:column>  
+                        <p:column headerText="Editar">
+                         <p:commandButton value="Editar" actionListener="#{pacienteController.findForEditMedicamento(medicamento.idMedicamento)}" oncomplete="PF('widgetMedicamento2').show();" update=":dialogMedicamento2"/>
+                         <!-- los dos puntos(:) significan acceder a un formulario fuera de este formulario!-->
+                        </p:column>
+                        <p:column headerText="Eliminar">
+                            <p:commandButton value="Eliminar" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Registrar" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
+                </h:form>
             </p:tab>
         </p:accordionPanel>
+        
+        
+        
+        
+        
+        
+        
+         <p:dialog header="Nuevo medicamento" widgetVar="widgetMedicamento" id="dialogMedicamento" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <!--p componente de librería primefaces-->
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Nombre comercial:" for="nombreComercial"/>
+                            <p:inputText id="nombreComercial" value="#{pacienteController.medicamento.nombreComercial}" required="true" label="Nombre Comercial"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Marca:" for="Marca"/>
+                            <p:inputText id="Marca" value="#{pacienteController.medicamento.marca}" required="true" />
+                        </p:column>
+                    </p:row><p:row>
+                        <p:column> 
+                            <p:outputLabel value="Descripción:" for="Descripción"/>
+                            <p:inputText id="Descripción" value="#{pacienteController.medicamento.descripcion}" required="true"/>
+                        </p:column>
+                    </p:row><p:row>
+                        <p:column> 
+                            <p:outputLabel value="Presentación:" for="Presentación"/>
+                            <p:inputText id="Presentación" value="#{pacienteController.medicamento.presentacion}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Nombre genérico:" for="nombreGenerico"/>
+                            <p:inputText id="nombreGenerico" value="#{pacienteController.medicamento.nombreGenerico}" required="true" label="Nombre Generico"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Contraindicaciones: " for="Contraindicaciones"/>
+                            <p:inputText id="Contraindicaciones" value="#{pacienteController.medicamento.contraIndicaciones}" required="true"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Registrar" actionListener="#{pacienteController.crearMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
+            </h:form>
+        </p:dialog>
+        
+        
+        
+        
+        
+         <p:dialog header="Nuevo medicamento" widgetVar="widgetMedicamento2" id="dialogMedicamento2" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <!--p componente de librería primefaces-->
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Nombre comercial:" for="nombreComercial"/>
+                            <p:inputText id="nombreComercial" value="#{pacienteController.medicamento.nombreComercial}" required="true" label="Nombre Comercial"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Marca:" for="Marca"/>
+                            <p:inputText id="Marca" value="#{pacienteController.medicamento.marca}" required="true" />
+                        </p:column>
+                    </p:row><p:row>
+                        <p:column> 
+                            <p:outputLabel value="Descripción:" for="Descripción"/>
+                            <p:inputText id="Descripción" value="#{pacienteController.medicamento.descripcion}" required="true"/>
+                        </p:column>
+                    </p:row><p:row>
+                        <p:column> 
+                            <p:outputLabel value="Presentación:" for="Presentación"/>
+                            <p:inputText id="Presentación" value="#{pacienteController.medicamento.presentacion}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Nombre genérico:" for="nombreGenerico"/>
+                            <p:inputText id="nombreGenerico" value="#{pacienteController.medicamento.nombreGenerico}" required="true" label="Nombre Generico"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Contraindicaciones: " for="Contraindicaciones"/>
+                            <p:inputText id="Contraindicaciones" value="#{pacienteController.medicamento.contraIndicaciones}" required="true"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Editar" actionListener="#{pacienteController.editarMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento2').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
+            </h:form>
+        </p:dialog>
         
     </ui:define>
 </ui:composition>

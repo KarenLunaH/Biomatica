@@ -6,8 +6,10 @@
 package Controllers;
 
 import Ejbs.DireccionFacadeLocal;
+import Ejbs.MedicamentoFacadeLocal;
 import Ejbs.PacienteFacadeLocal;
 import Models.Direccion;
+import Models.Medicamento;
 import Models.Paciente;
 import java.io.IOException;
 import java.io.Serializable;
@@ -34,14 +36,19 @@ public class PacienteController implements Serializable{
     private PacienteFacadeLocal pacienteEjb;
     private Paciente paciente;
     private List<Paciente> pacientes;
+    private Medicamento medicamento;
     
     @EJB
     private DireccionFacadeLocal direccionEjb;
+    
+    @EJB
+    private MedicamentoFacadeLocal medicamentoEjb;
     
     @PostConstruct
     public void init(){
         this.paciente = new Paciente();
         this.pacientes = new ArrayList<Paciente>();
+        this.medicamento = new Medicamento();//instanciamos medicamento
     }
     
     public void listar(){
@@ -52,6 +59,29 @@ public class PacienteController implements Serializable{
         this.pacienteEjb.create(paciente);
         this.paciente = null;
         this.paciente = new Paciente();
+    }
+    
+    public void crearMedicamento(){
+        this.medicamento.setIdPaciente(paciente);
+        this.paciente.getMedicamentoList().add(medicamento);
+        this.medicamentoEjb.create(medicamento);
+        this.pacienteEjb.edit(paciente);
+        this.medicamento=null;
+        this.medicamento=new Medicamento();
+    }
+    
+    public void findForEditMedicamento(Object id){
+        this.medicamento = this.medicamentoEjb.find(id);
+    }
+    
+    public void editarMedicamento(){
+        this.medicamentoEjb.edit(medicamento);
+        this.medicamento=null;
+        this.medicamento=new Medicamento();
+    }
+    
+    public void eliminarMedicamento(Medicamento m){
+        this.medicamentoEjb.remove(m);
     }
     
     public void limpiarformulario(){
@@ -129,5 +159,19 @@ public class PacienteController implements Serializable{
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         Object id = sessionMap.get("idPaciente");
         this.paciente = this.pacienteEjb.find(id);
+    }
+
+    /**
+     * @return the medicamento
+     */
+    public Medicamento getMedicamento() {
+        return medicamento;
+    }
+
+    /**
+     * @param medicamento the medicamento to set
+     */
+    public void setMedicamento(Medicamento medicamento) {
+        this.medicamento = medicamento;
     }
 }
