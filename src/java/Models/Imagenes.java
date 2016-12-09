@@ -60,6 +60,8 @@ public class Imagenes implements Serializable {
     private Part file;
 
     public Imagenes() {
+        this.url = null;
+        this.typo = " ";
     }
 
     public Imagenes(Integer idImagen) {
@@ -129,6 +131,24 @@ public class Imagenes implements Serializable {
     @Override
     public String toString() {
         return "Models.Imagenes[ idImagen=" + idImagen + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public Part getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(Part file) {
+        this.file = file;
+    }
+    
+    public boolean hasImage(){
+        return (this.url!=null)? true:false;
     }
     
 }

@@ -32,6 +32,7 @@ public class SubirImagen {
                     if(fileUpload.getSize() > this.limit_max_size){
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(""));
                     }else{
+                        
                         String currentFileName =  submittedFileName;
                         String extension =  currentFileName.substring(currentFileName.lastIndexOf("."),currentFileName.length());
                         Long nameRandom = Calendar.getInstance().getTimeInMillis();

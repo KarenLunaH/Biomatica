@@ -47,31 +47,31 @@
             <p:tab id="antescedentesTab" title="Antescedentes">
                  <h:form id="antescedentesForm">
                      <p:panelGrid>
-                         <p:row>
-                             <p:column>
-                <p:outputLabel rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="No tiene antescedentes registrados"/>
-                             </p:column>
-                         </p:row>
-                         <p:row>
-                             <p:column>
-                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Heredo-Familiares: #{pacienteController.antescedentesConsulta.heredoFam}"/>
-                             </p:column>
-                         </p:row>
-                         <p:row>
-                             <p:column>
-                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales Patológicos: #{pacienteController.antescedentesConsulta.persoPatologicos} "/>
-                 </p:column>
-                         </p:row>
-                         <p:row>
-                             <p:column>
-                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales no Patológicos: #{pacienteController.antescedentesConsulta.persoNoPato}"/>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="No tiene antescedentes registrados"/>
                             </p:column>
-                         </p:row>
-                         <p:row>
-                             <p:column>
-                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Gineco-Obstétricos: #{pacienteController.antescedentesConsulta.genecoObste} "/>
-                   </p:column>
-                         </p:row>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Heredo-Familiares: #{pacienteController.antescedentesConsulta.heredoFam}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                 <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales Patológicos: #{pacienteController.antescedentesConsulta.persoPatologicos} "/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Personales no Patológicos: #{pacienteController.antescedentesConsulta.persoNoPato}"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Gineco-Obstétricos: #{pacienteController.antescedentesConsulta.genecoObste} "/>
+                            </p:column>
+                        </p:row>
                      </p:panelGrid>    
                 <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes" oncomplete="PF('widgetAntescedentes').show();" update=":dialogAntescedentes"/>
                 <p:commandButton actionListener="#{pacienteController.findAntescedentesEdit()}" rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Modificar antescedentes" oncomplete="PF('widgetAntescedentes2').show();" update=":dialogAntescedentes2"/>
@@ -81,6 +81,18 @@
             
             <p:tab title="Consultas">
                 <p:outputLabel value="To do, hacer consultas form"/>
+            </p:tab>
+            
+            <p:tab title="Imagenes">
+                <h:form id="imagenesForm">
+                    <p:tabView value="#{pacienteController.paciente.imagenesList}" var="imagen">
+                        <p:tab title="#{imagen.nombre}">
+                            <p:graphicImage width="800px" height="400px" rendered="#{imagen.hasImage()}" library="imagenes" name="#{imagen.url}"/>
+                            <p:commandButton value="Editar" actionListener="#{pacienteController.findForEditImagen(imagen.idImagen)}" oncomplete="PF('widgetImagen2').show();" update=":dialogImagen2"/>
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="Registrar" actionListener="#{pacienteController.resetUploaded()}" oncomplete="PF('widgetImagen').show();" update=":dialogImagen"/>
+                </h:form>
             </p:tab>
             
             <p:tab title="Lista de medicamento">
@@ -118,16 +130,8 @@
                     <p:commandButton value="Registrar" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
                 </h:form>
             </p:tab>
-            
-            
-            
         </p:accordionPanel>
-        
-        
-        
-        
-        
-        
+                
         
          <p:dialog header="Nuevo medicamento" widgetVar="widgetMedicamento" id="dialogMedicamento" modal="true">
             <h:form>
@@ -259,7 +263,7 @@
         
         
         
-        <p:dialog header="Registro de antescedentes " widgetVar="widgetAntescedentes2" id="dialogAntescedentes2" modal="true">
+        <p:dialog header="Modificar antescedentes " widgetVar="widgetAntescedentes2" id="dialogAntescedentes2" modal="true">
             <h:form>
                 <p:messages autoUpdate="true"/>
                 <p:panelGrid>
@@ -291,7 +295,48 @@
             </h:form>
         </p:dialog>
         
+        <p:dialog header="Subir imágen" widgetVar="widgetImagen" id="dialogImagen" modal="true">
+            <h:form enctype="multipart/form-data">
+                <!-- enctype="multipart/form-data", para subir archivos al servidor -->
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre de la imágen: " for="Nombre"/>
+                            <p:inputText value="#{pacienteController.imagen.nombre}" id="Nombre" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:inputFile id="file" value="#{pacienteController.imagen.file}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <h:commandButton value="Subir imagen" actionListener="#{pacienteController.crearImagen()}"/>
+            </h:form>
+        </p:dialog>
         
+        <p:dialog header="Actualizar imágen" widgetVar="widgetImagen2" id="dialogImagen2" modal="true">
+            <h:form enctype="multipart/form-data">
+                <!-- enctype="multipart/form-data", para subir archivos al servidor -->
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre de la imágen: " for="Nombre"/>
+                            <p:inputText value="#{pacienteController.imagen.nombre}" id="Nombre" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:inputFile id="file" value="#{pacienteController.imagen.file}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <h:commandButton value="Actualizar imagen" actionListener="#{pacienteController.editarImagen()}"/>
+            </h:form>
+        </p:dialog>
+
         
     </ui:define>
 </ui:composition>

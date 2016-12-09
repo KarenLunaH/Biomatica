@@ -7,10 +7,13 @@ package Controllers;
 
 import Ejbs.AntescedentesFacadeLocal;
 import Ejbs.DireccionFacadeLocal;
+import Ejbs.ImagenesFacadeLocal;
 import Ejbs.MedicamentoFacadeLocal;
 import Ejbs.PacienteFacadeLocal;
+import Helpers.SubirImagen;
 import Models.Antescedentes;
 import Models.Direccion;
+import Models.Imagenes;
 import Models.Medicamento;
 import Models.Paciente;
 import java.io.IOException;
@@ -33,6 +36,7 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class PacienteController implements Serializable{
+
     
     @EJB
     private PacienteFacadeLocal pacienteEjb;
@@ -40,7 +44,8 @@ public class PacienteController implements Serializable{
     private List<Paciente> pacientes;
     private Medicamento medicamento;
     private Antescedentes antescedentes, antescedentesConsulta;
-   
+    private Imagenes imagen;
+    private boolean uploaded;
     
     @EJB
     private DireccionFacadeLocal direccionEjb;
@@ -51,12 +56,17 @@ public class PacienteController implements Serializable{
     @EJB
     private AntescedentesFacadeLocal antescedentesEjb;
     
+    @EJB
+    private ImagenesFacadeLocal imagenesEjb;
+    
     @PostConstruct
     public void init(){
         this.paciente = new Paciente();
         this.pacientes = new ArrayList<Paciente>();
         this.medicamento = new Medicamento();//instanciamos medicamento
         this.antescedentes = new Antescedentes();
+        this.imagen = new Imagenes();
+        uploaded = false;
     }
     
     public void crearAntescedentes(){
@@ -69,12 +79,52 @@ public class PacienteController implements Serializable{
         this.antescedentesConsulta = this.paciente.getAntescedentesList().get(0);
     }
     
+    public void findForEditImagen(Object id){
+        this.imagen = this.imagenesEjb.find(id);
+        this.resetUploaded();
+    }
+    
+    public void crearImagen() throws Exception{
+        if (this.uploaded == false && this.imagen.getFile() != null) {
+            SubirImagen si = new SubirImagen();
+            String s = si.processUpload(this.imagen.getFile());
+            this.uploaded = true;
+            this.imagen.setUrl(s);
+            this.imagen.setIdPaciente(paciente);
+            this.paciente.getImagenesList().add(imagen);
+            this.imagenesEjb.create(imagen);
+            this.pacienteEjb.edit(paciente);
+            this.imagen = null;
+            this.imagen = new Imagenes();
+            this.imagen.setNombre("");
+            this.uploaded = true;
+        }
+    }
+    
+    public void editarImagen() throws Exception{
+        if (this.uploaded == false && this.imagen.getFile() != null) {
+            SubirImagen si = new SubirImagen();
+            si.deleteFile(this.imagen.getUrl());
+            String s = si.processUpload(this.imagen.getFile());
+            this.imagen.setUrl(s);
+            this.imagenesEjb.edit(imagen);
+            this.pacienteEjb.edit(paciente);
+        }else{
+            this.imagenesEjb.edit(imagen);
+            this.pacienteEjb.edit(paciente);
+        }
+    }
+    
+    public void resetUploaded(){
+        this.uploaded = false;
+    }
+    
     public void findAntescedentesEdit(){
         this.antescedentes=this.paciente.getAntescedentesList().get(0);
     }
     
     public void editAntescedentes(){
-        this.antescedentesEjb.edit(antescedentes);
+        this.paciente.getAntescedentesList().set(0, antescedentes);
         this.pacienteEjb.edit(paciente);
         this.antescedentesConsulta = this.paciente.getAntescedentesList().get(0);
     }
@@ -244,6 +294,21 @@ public class PacienteController implements Serializable{
      */
     public void setAntescedentesConsulta(Antescedentes antescedentesConsulta) {
         this.antescedentesConsulta = antescedentesConsulta;
+    }
+    
+    
+    /**
+     * @return the imagen
+     */
+    public Imagenes getImagen() {
+        return imagen;
+    }
+
+    /**
+     * @param imagen the imagen to set
+     */
+    public void setImagen(Imagenes imagen) {
+        this.imagen = imagen;
     }
     
     
