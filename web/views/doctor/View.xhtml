@@ -1,0 +1,192 @@
+<ui:composition template="/WEB-INF/admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="title">
+        Doctor
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{doctorController.find()}"/>
+        </f:metadata>
+        
+        <p:fieldset legend="Datos generales del Doctor" style="margin-bottom:20px">
+            <h:form id="form">     
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre: #{doctorController.doctor.nombreCompleto()}"/>  
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>              
+            </h:form> 
+        </p:fieldset>
+        
+        <p:fieldset legend="Datos fiscales del Doctor" style="margin-bottom:20px">
+            <h:form id="form2">     
+
+                <p:panelGrid rendered="#{doctorController.hasDatosFiscales()}">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="RFC: #{doctorController.datosFiscalesConsulta.rfc}"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Tipo de persona: #{doctorController.datosFiscalesConsulta.tipoDePersona}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Regimen fiscal: #{doctorController.datosFiscalesConsulta.regimenFiscal}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Direccion: #{doctorController.datosFiscalesConsulta.idDireccion}, CP #{doctorController.datosFiscalesConsulta.idDireccion.codigoPostal}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle: #{doctorController.datosFiscalesConsulta.calle}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Número Exterior: #{doctorController.datosFiscalesConsulta.numeroExterior}"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel rendered="#{not empty doctorController.datosFiscalesConsulta.numeroInterior}" value="Número Interior: #{doctorController.datosFiscalesConsulta.numeroInterior}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>     
+                <p:commandButton rendered="#{!doctorController.hasDatosFiscales()}" value="Registrar datos fiscales" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+                <p:commandButton rendered="#{doctorController.hasDatosFiscales()}" value="Modificar datos fiscales" actionListener="#{doctorController.findDatosFiscalesEdit()}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+            </h:form> 
+        </p:fieldset>
+        
+        
+        <p:dialog header="Datos fiscales" widgetVar="widgetDatos" id="dialogDatos" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="RFC: " for="RFC"/>
+                            <p:inputMask mask="aaaa999999" value="#{doctorController.datosFiscales.rfc}" id="RFC" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo de persona: " />
+                            <p:selectOneMenu value="#{doctorController.datosFiscales.tipoDePersona}">
+                                <f:selectItem itemLabel="Físicas" itemValue="Físicas" />
+                                <f:selectItem itemLabel="Morales" itemValue="Morales" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Regimen Fiscal" for="RegFis"/>
+                            <p:inputText value="#{doctorController.datosFiscales.regimenFiscal}" label="Regimen Fiscal" id="RegFis" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Código Postal" for="CP"/>
+                            <p:inputMask mask="99999" value="#{doctorController.datosFiscales.idDireccion.codigoPostal}" id="CP" required="true">
+                                <p:ajax event="keyup" listener="#{doctorController.findDireccion()}" update="dirU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Dirección: "/>
+                            <p:outputLabel id="dirU" value="#{doctorController.datosFiscales.idDireccion}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle" for="Calle"/>
+                            <p:inputText value="#{doctorController.datosFiscales.calle}" id="Calle" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Número Exterior" for="NumE"/>
+                            <p:inputText value="#{doctorController.datosFiscales.numeroExterior}" id="NumE" label="Número Exterior" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Número Interior"/>
+                            <p:inputText value="#{doctorController.datosFiscales.numeroInterior}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Registrar" actionListener="#{doctorController.crearDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form2"/>
+            </h:form>
+        </p:dialog>
+        
+        
+        <p:dialog header="Datos fiscales, actualizar" widgetVar="widgetDatos2" id="dialogDatos2" modal="true">
+            <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="RFC: " for="RFC"/>
+                            <p:inputMask mask="aaaa999999" value="#{doctorController.datosFiscales.rfc}" id="RFC" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo de persona: " />
+                            <p:selectOneMenu value="#{doctorController.datosFiscales.tipoDePersona}">
+                                <f:selectItem itemLabel="Físicas" itemValue="Físicas" />
+                                <f:selectItem itemLabel="Morales" itemValue="Morales" />
+                            </p:selectOneMenu> 
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Regimen Fiscal" for="RegFis"/>
+                            <p:inputText value="#{doctorController.datosFiscales.regimenFiscal}" label="Regimen Fiscal" id="RegFis" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Código Postal" for="CP"/>
+                            <p:inputMask mask="99999" value="#{doctorController.datosFiscales.idDireccion.codigoPostal}" id="CP" required="true">
+                                <p:ajax event="keyup" listener="#{doctorController.findDireccion()}" update="dirU"/>
+                            </p:inputMask>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Dirección: "/>
+                            <p:outputLabel id="dirU" value="#{doctorController.datosFiscales.idDireccion}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle" for="Calle"/>
+                            <p:inputText value="#{doctorController.datosFiscales.calle}" id="Calle" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Número Exterior" for="NumE"/>
+                            <p:inputText value="#{doctorController.datosFiscales.numeroExterior}" id="NumE" label="Número Exterior" required="true"/>
+                        </p:column>
+                        <p:column>
+                            <p:outputLabel value="Número Interior"/>
+                            <p:inputText value="#{doctorController.datosFiscales.numeroInterior}"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Actualizar" actionListener="#{doctorController.editDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form2"/>
+            </h:form>
+        </p:dialog>
+        
+    </ui:define>
+</ui:composition>

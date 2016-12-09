@@ -40,7 +40,9 @@
                 <p:column headerText="Editar">
                     <p:commandButton value="Editar" actionListener="#{doctorController.findForEdit(doctor.idDoctor)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
                 </p:column>
-                
+                <p:column headerText="Ver información">
+                    <p:commandButton value="Ver información" actionListener="#{doctorController.viewPage(doctor.idDoctor)}"/>
+                </p:column>                
             </p:dataTable>
             <p:commandButton value="Registrar" actionListener="#{doctorController.limpiarFormulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
         </h:form> 

@@ -76,6 +76,7 @@ public class DatosFiscales implements Serializable {
     private Direccion idDireccion;
 
     public DatosFiscales() {
+        this.idDireccion = new Direccion();
     }
 
     public DatosFiscales(Integer idDatosFiscales) {

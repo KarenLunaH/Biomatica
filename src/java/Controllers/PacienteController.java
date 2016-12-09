@@ -75,7 +75,7 @@ public class PacienteController implements Serializable{
     }
     
     public void crearAntescedentes(){
-       this.antescedentes.setIdPaciente(paciente);
+        this.antescedentes.setIdPaciente(paciente);
         this.paciente.getAntescedentesList().add(antescedentes);
         this.antescedentesEjb.create(antescedentes);
         this.pacienteEjb.edit(paciente);
@@ -139,6 +139,7 @@ public class PacienteController implements Serializable{
     }
     
     public void crear(){
+        this.paciente.setRfc(this.paciente.getRfc().toUpperCase());
         this.pacienteEjb.create(paciente);
         this.paciente = null;
         this.paciente = new Paciente();
