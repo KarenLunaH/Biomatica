@@ -37,6 +37,11 @@ import javax.inject.Named;
 @ViewScoped
 public class PacienteController implements Serializable{
 
+    /*
+    *Etiqueta ViewScoped, indica que este controlador podrá
+    *ser visto/usado en la vista en la que se mande a llamar,
+    * es decir, no guardará información durante toda la sesión.
+    */
     
     @EJB
     private PacienteFacadeLocal pacienteEjb;
