@@ -109,7 +109,16 @@ public class PacienteController implements Serializable{
             this.paciente.getIdDireccion().setEstado(d.getEstado());
         }
     }
-
+    
+    public boolean tieneRegistradoAntescedentes(){
+        /*
+        if ternario
+        (condicion) ? (si se cumple) valor verdadero (else:else) valor falso
+        */
+        return (this.paciente.getAntescedentesList().size() > 0 )? true : false; 
+    }
+            
+            
     /**
      * @return the paciente
      */
@@ -176,4 +185,7 @@ public class PacienteController implements Serializable{
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
     }
+    
+    
+    
 }

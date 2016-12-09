@@ -45,7 +45,9 @@
         <p:accordionPanel id="accordion">
             
             <p:tab title="Antescedentes">
-                <p:outputLabel value="To do, hacer ANTESCEDENTES"/>
+                <p:outputLabel rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="No tiene antescedentes registrados"/>
+                <p:outputLabel rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Tiene registrados"/>
+                <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes"/>
             </p:tab>
             
             <p:tab title="Consultas">
