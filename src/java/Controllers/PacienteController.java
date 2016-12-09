@@ -5,6 +5,12 @@
  */
 package Controllers;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Image;
+import com.lowagie.text.PageSize;
+
 import Ejbs.AntescedentesFacadeLocal;
 import Ejbs.DireccionFacadeLocal;
 import Ejbs.ImagenesFacadeLocal;
@@ -16,6 +22,7 @@ import Models.Direccion;
 import Models.Imagenes;
 import Models.Medicamento;
 import Models.Paciente;
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +34,9 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+
+
+
 
 /**
  *
@@ -316,7 +326,6 @@ public class PacienteController implements Serializable{
     public void setImagen(Imagenes imagen) {
         this.imagen = imagen;
     }
-    
-    
+            
     
 }

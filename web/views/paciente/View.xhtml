@@ -97,6 +97,10 @@
             
             <p:tab title="Lista de medicamento">
                 <h:form id="medicamentoForm">
+                    <h:commandLink>
+                        <p:graphicImage library="icons" name="pdfimage.png"/>
+                        <p:dataExporter type="pdf" target="medicamentoTable" fileName="Medicamentos_de_#{pacienteController.paciente}" />
+                    </h:commandLink>
                     <p:dataTable id="medicamentoTable" value="#{pacienteController.paciente.medicamentoList}" var="medicamento" paginator="true" rows="5">
                         <f:facet name="header">
                             Medicamentos del paciente.
@@ -119,14 +123,14 @@
                         <p:column headerText="Contraindicaciones ">
                             <p:outputLabel value="#{medicamento.contraIndicaciones}"/>
                         </p:column>  
-                        <p:column headerText="Editar">
+                        <p:column headerText="Editar" exportable="false">
                          <p:commandButton value="Editar" actionListener="#{pacienteController.findForEditMedicamento(medicamento.idMedicamento)}" oncomplete="PF('widgetMedicamento2').show();" update=":dialogMedicamento2"/>
                          <!-- los dos puntos(:) significan acceder a un formulario fuera de este formulario!-->
                         </p:column>
-                        <p:column headerText="Eliminar">
+                        <p:column headerText="Eliminar" exportable="false">
                             <p:commandButton value="Eliminar" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="accordion:medicamentoForm"/>
                         </p:column>
-                    </p:dataTable>
+                    </p:dataTable> 
                     <p:commandButton value="Registrar" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
                 </h:form>
             </p:tab>

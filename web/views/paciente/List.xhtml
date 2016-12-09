@@ -19,30 +19,59 @@
                 
                 <f:facet name="header">
                     Pacientes
-                </f:facet>                 
-                <p:column headerText="Nombre">
+                </f:facet>      
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Nombre" />
+                    </f:facet>
                     <p:outputLabel value="#{paciente}"/>
                 </p:column>   
-                <p:column headerText="CURP" filterBy="#{paciente.curp}">
+                
+                <p:column filterBy="#{paciente.curp}">
+                    <f:facet name="header">
+                        <h:outputText value="CURP" />
+                    </f:facet>
                     <p:outputLabel value="#{paciente.curp}"/>
                 </p:column>  
-                <p:column headerText="RFC" filterBy="#{paciente.rfc}">
+                
+                <p:column filterBy="#{paciente.rfc}">
+                    <f:facet name="header">
+                        <h:outputText value="RFC" />
+                    </f:facet>
                     <p:outputLabel value="#{paciente.rfc}"/>
                 </p:column>
-                <p:column headerText="Fecha de nacimiento">
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fecha de nacimiento" />
+                    </f:facet>
                     <p:outputLabel value="#{paciente.fechaNacimiento}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </p:outputLabel>
                 </p:column>
-                <p:column headerText="Sexo">
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sexo" />
+                    </f:facet>
                     <p:outputLabel value="#{paciente.sexo}"/>
                 </p:column>
-                <p:column headerText="Editar">
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Editar" />
+                    </f:facet>
                     <p:commandButton value="Editar" actionListener="#{pacienteController.findForEdit(paciente.idPaciente)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
                 </p:column>
-                <p:column headerText="Ver detalles">
+                
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ver detalles" />
+                    </f:facet>
                     <p:commandButton value="Ver detalles" actionListener="#{pacienteController.viewPage(paciente.idPaciente)}"/>
                 </p:column>
+                
             </p:dataTable>
             <p:commandButton value="Registrar" actionListener="#{pacienteController.limpiarformulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
         </h:form> 
