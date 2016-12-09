@@ -1,0 +1,55 @@
+<ui:composition template="/WEB-INF/admin.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="title">
+        Paciente
+    </ui:define>
+
+    <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{pacienteController.find()}"/>
+        </f:metadata>
+        
+        <p:fieldset legend="Datos generales del Paciente" style="margin-bottom:20px">
+            <h:form id="form">     
+
+                <p:panelGrid>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Nombre: #{pacienteController.paciente}"/>  
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Telefono: #{pacienteController.paciente.telefono}"/>  
+                        </p:column>
+                    </p:row>
+
+                    <!--<p:row>
+                        <p:column>
+                            <p:commandButton value="Modificar" actionListener="#{pacienteBean.findOneByID(paciente)}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>                            
+                        </p:column>
+                    </p:row>-->
+
+                </p:panelGrid>              
+            </h:form> 
+        </p:fieldset>
+        
+        
+        <p:accordionPanel id="accordion">
+            <p:tab title="Consultas">
+                <p:outputLabel value="To do, hacer consultas form"/>
+            </p:tab>
+            <p:tab title="Lista de medicamento">
+                
+            </p:tab>
+        </p:accordionPanel>
+        
+    </ui:define>
+</ui:composition>

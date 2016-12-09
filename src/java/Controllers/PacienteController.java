@@ -9,11 +9,15 @@ import Ejbs.DireccionFacadeLocal;
 import Ejbs.PacienteFacadeLocal;
 import Models.Direccion;
 import Models.Paciente;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -109,5 +113,21 @@ public class PacienteController implements Serializable{
      */
     public void setPacientes(List<Paciente> pacientes) {
         this.pacientes = pacientes;
+    }
+    
+    
+    public void viewPage(Object id) throws IOException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        sessionMap.put("idPaciente", id);
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath + "/faces/views/paciente/View.xhtml");
+    }
+    
+    public void find(){
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        Object id = sessionMap.get("idPaciente");
+        this.paciente = this.pacienteEjb.find(id);
     }
 }
