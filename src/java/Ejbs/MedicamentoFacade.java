@@ -6,9 +6,11 @@
 package Ejbs;
 
 import Models.Medicamento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,12 @@ public class MedicamentoFacade extends AbstractFacade<Medicamento> implements Me
 
     public MedicamentoFacade() {
         super(Medicamento.class);
+    }
+    
+    @Override
+    public List<Medicamento> findAll() {
+        Query q = em.createQuery("Select m FROM Medicamento m ORDER BY m.idMedicamento DESC",Medicamento.class);
+        return q.getResultList();
     }
     
 }

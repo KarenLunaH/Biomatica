@@ -5,10 +5,13 @@
  */
 package Ejbs;
 
+import Models.Doctor;
 import Models.Paciente;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +30,12 @@ public class PacienteFacade extends AbstractFacade<Paciente> implements Paciente
 
     public PacienteFacade() {
         super(Paciente.class);
+    }
+    
+    @Override
+    public List<Paciente> findAll() {
+        Query q = em.createQuery("Select p FROM Paciente p ORDER BY p.idPaciente DESC", Paciente.class);
+        return q.getResultList();
     }
     
 }

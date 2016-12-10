@@ -6,6 +6,7 @@
 package Ejbs;
 
 import Models.Doctor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -38,6 +39,12 @@ public class DoctorFacade extends AbstractFacade<Doctor> implements DoctorFacade
         q.setParameter("p", psw);
         return (Doctor)q.getSingleResult();
         
+    }
+    
+    @Override
+    public List<Doctor> findAll(){
+        Query q = em.createQuery("Select d FROM Doctor d ORDER BY d.idDoctor DESC",Doctor.class);
+        return q.getResultList();
     }
     
 }
