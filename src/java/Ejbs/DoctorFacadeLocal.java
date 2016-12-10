@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Ejbs;
 
+package Ejbs;
 import Models.Doctor;
 import java.util.List;
 import javax.ejb.Local;

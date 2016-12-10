@@ -81,7 +81,14 @@
             </p:tab>
             
             <p:tab title="Consultas">
-                <p:outputLabel value="To do, hacer consultas form"/>
+                <h:form id="consultasForm">
+                    <p:tabView value="#{pacienteController.paciente.consultaList}" var="consulta">
+                        <p:tab title="Consulta del día: #{consulta.fechaHoraInicio}">
+                            
+                        </p:tab>
+                    </p:tabView>
+                    <p:commandButton value="Registrar consulta"/>
+                </h:form>
             </p:tab>
             
             <p:tab title="Imagenes">
