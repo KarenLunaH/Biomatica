@@ -167,8 +167,48 @@
                 <h:form id="consultasForm">
                     <p:tabView id="consultaTab" value="#{pacienteController.paciente.consultaList}" var="consulta">
                         <p:tab title="Consulta del día: #{consulta.fechaHoraInicio}">
-                            <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta2').show();" update=":dialogConsulta2" rendered="#{pacienteController.comenzarConsulta(consulta, loginController.doctor)}"/>
-   
+                            
+                            <p:panelGrid rendered="#{consulta.registrado}">
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Edad: #{consulta.edad}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Talla: #{consulta.talla}"/>
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Peso: #{consulta.peso}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Temperatura: #{consulta.temperatura}"/>
+                                    </p:column>
+                                </p:row>
+                                
+                                <p:row>
+                                    <p:column>
+                                        <p:outputLabel value="Tension Arterial: #{consulta.tensionArterial}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Frecuencia Cardiaca: #{consulta.frecuenciaCardiaca}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:outputLabel value="Frecuencia Respiratorio: #{consulta.frecuenciaRespiratorio}"/>
+                                    </p:column>
+                                </p:row>
+                                
+                                <p:row>
+                                    <p:column>
+                                        <strong>
+                                            <p:outputLabel value="Registrado por: #{consulta.idDoctor.prefijo} #{consulta.idDoctor.nombreCompleto()}"/>
+                                        </strong>
+                                    </p:column>
+                                </p:row>
+                                
+                            </p:panelGrid>
+                            <p:outputLabel value="Aún falta para la fecha de la cita" rendered="#{!consulta.registrado}"/>
+                            <p:commandButton value="Comenzar consulta" actionListener="#{pacienteController.findCitaForEdit(consulta.idConsulta)}" oncomplete="PF('widgetConsulta2').show();" update=":dialogConsulta2" rendered="#{pacienteController.comenzarConsulta(consulta, loginController.doctor)}"/>
                         </p:tab>
                     </p:tabView>
                    <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
@@ -519,14 +559,9 @@
                             <p:outputLabel value="Pronóstico:" for="pronostico"/>
                             <p:inputText id="pronostico" value="#{pacienteController.consulta.pronostico}" required="true"/>
                         </p:column>
-                    </p:row> <p:row>
-                        <p:column> 
-                            <p:outputLabel value="Fecha:" for="fecha"/>
-                            <p:inputText id="fecha" value="#{pacienteController.medicamento.nombreComercial}" required="true"/>
-                        </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.editarCita()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();" update=":accordion:consultasForm"/>
+                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.editarCita()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta2').hide();" update=":accordion:consultasForm"/>
             </h:form>
         </p:dialog>
         

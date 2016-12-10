@@ -46,6 +46,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Consulta.findByFechaHoraFin", query = "SELECT c FROM Consulta c WHERE c.fechaHoraFin = :fechaHoraFin")})
 public class Consulta implements Serializable {
 
+    /**
+     * @return the registrado
+     */
+    public boolean isRegistrado() {
+        return registrado;
+    }
+
+    /**
+     * @param registrado the registrado to set
+     */
+    public void setRegistrado(boolean registrado) {
+        this.registrado = registrado;
+    }
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,6 +110,8 @@ public class Consulta implements Serializable {
     @JoinColumn(name = "idDoctor", referencedColumnName = "idDoctor")
     @ManyToOne(optional = false)
     private Doctor idDoctor;
+    @Column(name = "registrado")
+    private boolean registrado;
 
     public Consulta() {
         this.fechaHoraInicio  = new Date();

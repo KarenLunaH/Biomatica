@@ -228,17 +228,17 @@ public class PacienteController implements Serializable{
     }
     
     public boolean comenzarConsulta(Consulta c, Doctor d){
-        if(c.getIdDoctor().getIdDoctor().intValue()==d.getIdDoctor().intValue()){
-          if(new Date().after(c.getFechaHoraInicio())){
-              return true;
-          }  
-          else{
-          return false;
-              }
+        if(c.isRegistrado()==false && c.getIdDoctor().getIdDoctor().intValue()==d.getIdDoctor().intValue()){
+            if(new Date().after(c.getFechaHoraInicio())){
+                return true;
+            }  
+            else{
+                return false;
+            }
         }
         else{
             return false;
-            }
+        }
     }
     
     public void findCitaForEdit(Object id){
@@ -246,6 +246,7 @@ public class PacienteController implements Serializable{
     }
     
     public void editarCita(){
+        this.consulta.setRegistrado(true);
         this.consultaEjb.edit(consulta);
         this.consulta=null;
         this.consulta=new Consulta();
