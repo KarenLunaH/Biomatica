@@ -87,7 +87,8 @@
                             
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Registrar consulta"/>
+                   <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
+
                 </h:form>
             </p:tab>
             
@@ -346,6 +347,26 @@
                     </p:row>
                 </p:panelGrid>
                 <h:commandButton value="Actualizar imagen" actionListener="#{pacienteController.editarImagen()}"/>
+            </h:form>
+        </p:dialog>
+        
+        
+        
+         <p:dialog header="Actualizar " widgetVar="widgetConsulta" id="dialogConsulta" modal="true">
+             <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column><p:outputLabel for="FechaIn" value="Fecha de consulta"/></p:column>
+                        <p:column><p:calendar pattern="MM/dd/yyyy HH:mm:ss" mindate="#{loginController.obtenerCitaSiguiente()}" id="FechaIn" value="#{grupoController.grupo.fechaIn}" required="true" label="Fecha de consulta"/></p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column><p:outputLabel for="FechaFi" value="Fin de la consluta"/></p:column>
+                        <p:column><p:calendar pattern="MM/dd/yyyy HH:mm:ss" mindate="#{loginController.obtenerCitaSiguiente()}" id="FechaFi" value="#{grupoController.grupo.fechaFin}" required="true" label="Fin de la consulta"/></p:column>
+                    </p:row>                   
+                </p:panelGrid>
+                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.crearCita(loginController.doctor)}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();"/>
             </h:form>
         </p:dialog>
 

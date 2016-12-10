@@ -9,6 +9,7 @@ import Ejbs.DoctorFacadeLocal;
 import Models.Doctor;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -117,6 +118,19 @@ public class LoginController implements Serializable{
         } else {
             FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath + "/faces/views/Login.xhtml");
         }
+    }
+    
+    public Date obtenerCitaSiguiente() {
+        if(this.regresaLogeado()){
+           if(this.doctor.getConsultaList().size()==0){
+               return new Date();
+           }
+           else{
+               int c = this.doctor.getConsultaList().size()-1;
+               return this.doctor.getConsultaList().get(c).getFechaHoraFin();
+           }
+        }
+        return null;
     }
 
 }

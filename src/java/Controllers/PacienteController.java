@@ -12,13 +12,17 @@ import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
 
 import Ejbs.AntescedentesFacadeLocal;
+import Ejbs.ConsultaFacadeLocal;
 import Ejbs.DireccionFacadeLocal;
+import Ejbs.DoctorFacadeLocal;
 import Ejbs.ImagenesFacadeLocal;
 import Ejbs.MedicamentoFacadeLocal;
 import Ejbs.PacienteFacadeLocal;
 import Helpers.SubirImagen;
 import Models.Antescedentes;
+import Models.Consulta;
 import Models.Direccion;
+import Models.Doctor;
 import Models.Imagenes;
 import Models.Medicamento;
 import Models.Paciente;
@@ -59,6 +63,7 @@ public class PacienteController implements Serializable{
     private Antescedentes antescedentes, antescedentesConsulta;
     private Imagenes imagen;
     private boolean uploaded;
+    private Consulta consulta;
     
     @EJB
     private DireccionFacadeLocal direccionEjb;
@@ -71,6 +76,12 @@ public class PacienteController implements Serializable{
     
     @EJB
     private ImagenesFacadeLocal imagenesEjb;
+    
+    @EJB
+    private ConsultaFacadeLocal consultaEjb;
+    
+    @EJB
+    private DoctorFacadeLocal doctorEjb;
     
     @PostConstruct
     public void init(){
@@ -202,6 +213,18 @@ public class PacienteController implements Serializable{
         }
     }
     
+    public void crearCita(Doctor d){
+        this.consulta.setIdDoctor(d);
+        this.consulta.setIdPaciente(paciente);
+        this.paciente.getConsultaList().add(consulta);
+        d.getConsultaList().add(consulta);
+        this.consultaEjb.create(consulta);
+        this.pacienteEjb.edit(paciente);
+        this.doctorEjb.edit(d);
+        this.consulta=null;
+        this.consulta=new Consulta();
+    }
+    
     public boolean tieneRegistradoAntescedentes(){
         /*
         if ternario
@@ -323,6 +346,20 @@ public class PacienteController implements Serializable{
      */
     public void setImagen(Imagenes imagen) {
         this.imagen = imagen;
+    }
+
+    /**
+     * @return the consulta
+     */
+    public Consulta getConsulta() {
+        return consulta;
+    }
+
+    /**
+     * @param consulta the consulta to set
+     */
+    public void setConsulta(Consulta consulta) {
+        this.consulta = consulta;
     }
             
     
