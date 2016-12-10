@@ -82,9 +82,8 @@
             
             <p:tab title="Consultas">
                 <h:form id="consultasForm">
-                    <p:tabView value="#{pacienteController.paciente.consultaList}" var="consulta">
+                    <p:tabView id="consultaTab" value="#{pacienteController.paciente.consultaList}" var="consulta">
                         <p:tab title="Consulta del día: #{consulta.fechaHoraInicio}">
-                            
                         </p:tab>
                     </p:tabView>
                    <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
@@ -352,21 +351,25 @@
         
         
         
-         <p:dialog header="Actualizar " widgetVar="widgetConsulta" id="dialogConsulta" modal="true">
+         <p:dialog header="Nueva consulta " widgetVar="widgetConsulta" id="dialogConsulta" modal="true">
              <h:form>
                 <p:messages autoUpdate="true"/>
                 <p:panelGrid>
                     <p:row>
                         <p:column><p:outputLabel for="FechaIn" value="Fecha de consulta"/></p:column>
-                        <p:column><p:calendar pattern="MM/dd/yyyy HH:mm:ss" mindate="#{loginController.obtenerCitaSiguiente()}" id="FechaIn" value="#{grupoController.grupo.fechaIn}" required="true" label="Fecha de consulta"/></p:column>
+                        <p:column>
+                            <p:calendar pattern="MM/dd/yyyy HH:mm" mindate="#{loginController.obtenerCitaSiguiente()}" id="FechaIn" value="#{pacienteController.consulta.fechaHoraInicio}" required="true" label="Fecha de consulta">
+                                <p:ajax event="change" update="FechaFi"/>
+                            </p:calendar>
+                        </p:column>
                     </p:row>
 
                     <p:row>
                         <p:column><p:outputLabel for="FechaFi" value="Fin de la consluta"/></p:column>
-                        <p:column><p:calendar pattern="MM/dd/yyyy HH:mm:ss" mindate="#{loginController.obtenerCitaSiguiente()}" id="FechaFi" value="#{grupoController.grupo.fechaFin}" required="true" label="Fin de la consulta"/></p:column>
+                        <p:column><p:calendar pattern="MM/dd/yyyy HH:mm" mindate="#{pacienteController.consulta.fechaHoraInicio}"  id="FechaFi" value="#{pacienteController.consulta.fechaHoraFin}" required="true" label="Fin de la consulta"/></p:column>
                     </p:row>                   
                 </p:panelGrid>
-                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.crearCita(loginController.doctor)}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();"/>
+                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.crearCita(loginController.doctor)}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();" update=":accordion:consultasForm"/>
             </h:form>
         </p:dialog>
 

@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -90,6 +91,7 @@ public class PacienteController implements Serializable{
         this.medicamento = new Medicamento();//instanciamos medicamento
         this.antescedentes = new Antescedentes();
         this.imagen = new Imagenes();
+        this.consulta = new Consulta();
         uploaded = false;
     }
     
@@ -360,6 +362,10 @@ public class PacienteController implements Serializable{
      */
     public void setConsulta(Consulta consulta) {
         this.consulta = consulta;
+    }
+    
+    public Date dameUnaHora(){
+        return this.consulta.getFechaHoraInicio();
     }
             
     

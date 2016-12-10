@@ -98,6 +98,10 @@ public class Consulta implements Serializable {
     private Doctor idDoctor;
 
     public Consulta() {
+        this.fechaHoraInicio  = new Date();
+        this.fechaHoraFin = new Date();
+        this.idPaciente = new Paciente();
+        this.idDoctor = new Doctor();
     }
 
     public Consulta(Integer idConsulta) {
