@@ -30,4 +30,6 @@ public interface DoctorFacadeLocal {
 
     int count();
     
+    Doctor login(String email,String psw);
+    
 }

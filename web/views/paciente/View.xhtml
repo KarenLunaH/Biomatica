@@ -99,7 +99,7 @@
                 <h:form id="medicamentoForm">
                     <h:commandLink>
                         <p:graphicImage library="icons" name="pdfimage.png"/>
-                        <p:dataExporter type="pdf" target="medicamentoTable" fileName="Medicamentos_de_#{pacienteController.paciente}" />
+                        <p:dataExporter type="pdf" target="medicamentoTable" fileName="receta" />
                     </h:commandLink>
                     <p:dataTable id="medicamentoTable" value="#{pacienteController.paciente.medicamentoList}" var="medicamento" paginator="true" rows="5">
                         <f:facet name="header">

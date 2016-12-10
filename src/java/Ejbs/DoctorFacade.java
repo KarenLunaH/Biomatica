@@ -9,6 +9,7 @@ import Models.Doctor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +28,16 @@ public class DoctorFacade extends AbstractFacade<Doctor> implements DoctorFacade
 
     public DoctorFacade() {
         super(Doctor.class);
+    }
+
+    @Override
+    public Doctor login(String email, String psw) {
+        
+        Query q = em.createQuery("SELECT d FROM Doctor d WHERE d.email= :e AND d.password= :p",Doctor.class);
+        q.setParameter("e", email);
+        q.setParameter("p", psw);
+        return (Doctor)q.getSingleResult();
+        
     }
     
 }

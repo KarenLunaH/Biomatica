@@ -1,16 +1,77 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+        <meta name="description" content=""/>
+        <meta name="author" content="Dashboard"/>
+        <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina"/>
+
+        <title>Login</title>
+
+        <!-- Bootstrap core CSS -->
+         <h:outputStylesheet  name="assets/css/bootstrap.css"/>
+        <!--external css-->
+        <h:outputStylesheet  name="assets/font-awesome/css/font-awesome.css"/>
+        <!-- Custom styles for this template -->
+        <h:outputStylesheet  name="assets/css/style.css"/>
+         <h:outputStylesheet  name="assets/css/style-responsive.css"/>
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </h:head>
+
+    <h:body>
+
+        <!-- **********************************************************************************************************************************************************
+        MAIN CONTENT
+        *********************************************************************************************************************************************************** -->
+
+        <div id="login-page">
+            <div class="container">
+
+                <h:form class="form-login">
+                    <h2 class="form-login-heading">Iniciar Sesión</h2>
+                    <div class="login-wrap">
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+                            <h:outputLabel for="Email" value="Email:" />
+                            <p:inputText id="Email" value="#{loginController.email}" required="true" />
+
+                            <h:outputLabel for="Password" value="Password:" />
+                            <p:password id="Password" value="#{loginController.psw}" required="true"/>
+                            
+                            <div class="row">
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" actionListener="#{loginController.login()}" update="@form" />
+                                </f:facet>
+                            </div>
+                        </h:panelGrid>  
+                        
+                    </div>
+                </h:form>	  	
+
+            </div>
+        </div>
+
+        <!-- js placed at the end of the document so the pages load faster -->
+        <h:outputScript name="assets/js/jquery.js"/>
+        <h:outputScript name="assets/js/bootstrap.min.js"/>
+
+        <!--BACKSTRETCH-->
+        <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+        <h:outputScript name="assets/js/jquery.backstretch.min.js"/>
+        <script>
+            $.backstretch("assets/img/login-bg.jpg", {speed: 500});
+        </script>
+
+    </h:body>
 </html>
+
