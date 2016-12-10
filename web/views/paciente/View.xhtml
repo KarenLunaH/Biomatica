@@ -22,21 +22,104 @@
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel value="Nombre: #{pacienteController.paciente}"/>  
+                            <p:outputLabel value="Nombre: #{pacienteController.paciente.nombres}"/>  
                         </p:column>
                     </p:row>
-                    
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Apellido Paterno: #{pacienteController.paciente.apellidoPaterno}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Apellido Materno: #{pacienteController.paciente.apellidoMaterno}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Fecha de nacimiento:"/>  
+                            <p:outputLabel value="#{pacienteController.paciente.fechaNacimiento}"><f:convertDateTime pattern="dd/MM/yyyy"/></p:outputLabel>
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Sexo: #{pacienteController.paciente.sexo}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="CURP: #{pacienteController.paciente.curp}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="RFC: #{pacienteController.paciente.rfc}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Tipo de sangre: #{pacienteController.paciente.tipoDeSangre}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Estado civil: #{pacienteController.paciente.estadoCivil}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Religión: #{pacienteController.paciente.religion}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Origen: #{pacienteController.paciente.origen}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Ocupación: #{pacienteController.paciente.ocupacion}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="C.P: #{pacienteController.paciente.idDireccion.codigoPostal}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Datos de dirección: #{pacienteController.paciente.idDireccion}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Calle: #{pacienteController.paciente.calle}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Número exterior: #{pacienteController.paciente.numeroExterior}"/>  
+                        </p:column>
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Número interior: #{pacienteController.paciente.numeroInterior}"/>  
+                        </p:column>
+                    </p:row> 
                     <p:row>
                         <p:column>
                             <p:outputLabel value="Telefono: #{pacienteController.paciente.telefono}"/>  
                         </p:column>
                     </p:row>
-
-                    <!--<p:row>
+                      <p:row>
                         <p:column>
-                            <p:commandButton value="Modificar" actionListener="#{pacienteBean.findOneByID(paciente)}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>                            
+                            <p:outputLabel value="Celular: #{pacienteController.paciente.celular}"/>  
                         </p:column>
-                    </p:row>-->
+                    </p:row>
+                      <p:row>
+                        <p:column>
+                            <p:outputLabel value="Correo: #{pacienteController.paciente.email}"/>  
+                        </p:column>
+                    </p:row>  <p:row>
+                        <p:column>
+                            <p:outputLabel value="Contacto de emergencia: #{pacienteController.paciente.contactoEmergencia}"/>  
+                        </p:column>
+                    </p:row>
+
+                 
 
                 </p:panelGrid>              
             </h:form> 

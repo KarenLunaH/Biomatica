@@ -22,9 +22,35 @@
 
                     <p:row>
                         <p:column>
-                            <p:outputLabel value="Nombre: #{doctorController.doctor.nombreCompleto()}"/>  
+                            <p:outputLabel value="Nombre: #{doctorController.doctor.prefijo} #{doctorController.doctor.nombreCompleto()}"/>  
                         </p:column>
                     </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Especialidad: #{doctorController.doctor.especialidad}"/>  
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Cédula profesional: #{doctorController.doctor.cedulaProfesional}"/>  
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Email: #{doctorController.doctor.email}"/>  
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Teléfono: #{doctorController.doctor.telefono}"/>  
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel value="Celular: #{doctorController.doctor.celular}"/>  
+                        </p:column>
+                    </p:row>
+                   
 
                 </p:panelGrid>              
             </h:form> 
