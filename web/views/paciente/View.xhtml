@@ -167,6 +167,8 @@
                 <h:form id="consultasForm">
                     <p:tabView id="consultaTab" value="#{pacienteController.paciente.consultaList}" var="consulta">
                         <p:tab title="Consulta del día: #{consulta.fechaHoraInicio}">
+                            <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta2').show();" update=":dialogConsulta2" rendered="#{pacienteController.comenzarConsulta(consulta, loginController.doctor)}"/>
+   
                         </p:tab>
                     </p:tabView>
                    <p:commandButton value="Registrar" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
@@ -456,6 +458,77 @@
             </h:form>
         </p:dialog>
 
+        
+        
+        
+        <p:dialog header="Consulta " widgetVar="widgetConsulta2" id="dialogConsulta2" modal="true">
+             <h:form>
+                <p:messages autoUpdate="true"/>
+                <p:panelGrid>
+                    <p:row>
+                        <p:outputLabel value="Edad: #{pacienteController.edad}"> 
+                            
+                        </p:outputLabel>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Talla:" for="talla"/>
+                            <p:inputText id="talla" value="#{pacienteController.consulta.talla}" required="true"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Peso:" for="peso"/>
+                            <p:inputText id="peso" value="#{pacienteController.consulta.peso}" required="true"/>
+                        </p:column>
+                    </p:row> <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Temperatura:" for="temperatura"/>
+                            <p:inputText id="temperatura" value="#{pacienteController.consulta.temperatura}" required="true"/>
+                        </p:column>
+                    </p:row> 
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Tensión Arterial:" for="tensionArterial"/>
+                            <p:inputText id="tensionArterial" value="#{pacienteController.consulta.tensionArterial}" required="true" label="Tensión Arterial"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Frecuencia Cardiaca:" for="nombreComercial"/>
+                            <p:inputText id="nombreComercial" value="#{pacienteController.medicamento.nombreComercial}" required="true" label="Frecuencia Cardiaca"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Frecuencia Respiratoria:" for="frecuenciaRespiratoria"/>
+                            <p:inputText id="frecuenciaRespiratoria" value="#{pacienteController.consulta.frecuenciaRespiratorio}" required="true" label="Frecuencia Respiratoria"/>
+                        </p:column>
+                    </p:row> <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Diagnostico:" for="diagnostico"/>
+                            <p:inputText id="diagnostico" value="#{pacienteController.consulta.diagnostico}" required="true"/>
+                        </p:column>
+                    </p:row> <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Enfermedad:" for="enfermedad"/>
+                            <p:inputText id="enfermedad" value="#{pacienteController.consulta.enfermedad}" required="true"/>
+                        </p:column>
+                    </p:row> <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Pronóstico:" for="pronostico"/>
+                            <p:inputText id="pronostico" value="#{pacienteController.consulta.pronostico}" required="true"/>
+                        </p:column>
+                    </p:row> <p:row>
+                        <p:column> 
+                            <p:outputLabel value="Fecha:" for="fecha"/>
+                            <p:inputText id="fecha" value="#{pacienteController.medicamento.nombreComercial}" required="true"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+                <p:commandButton value="Registrar consulta" actionListener="#{pacienteController.editarCita()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();" update=":accordion:consultasForm"/>
+            </h:form>
+        </p:dialog>
         
     </ui:define>
 </ui:composition>
