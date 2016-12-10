@@ -11,6 +11,7 @@
 
     <ui:define name="content">
         <f:metadata>
+            <f:event type="preRenderView" listener="#{loginController.esDoctorLogeado()}"/>
             <f:event type="preRenderView" listener="#{pacienteController.find()}"/>
         </f:metadata>
         

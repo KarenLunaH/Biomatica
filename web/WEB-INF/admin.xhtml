@@ -77,7 +77,8 @@
                                 <span>Catálogos</span>
                             </a>
                             <ul class="sub">
-                                <li>Mis rutas</li>
+                                <li><h:link rendered="#{loginController.regresaLogeado()}" value="Pacientes" outcome="/faces/views/paciente/List" /></li>
+                                <li><h:link rendered="#{loginController.regresaLogeado()}" value="Doctores" outcome="/faces/views/doctor/List" /></li>
                             </ul>
                         </li>
 

@@ -11,6 +11,8 @@
 
     <ui:define name="content">
         <f:metadata>
+            <!-- Pre render, ejecuta una acción antes de que se carge la página-->
+            <f:event type="preRenderView" listener="#{loginController.esDoctorLogeado()}"/>
             <f:event type="preRenderView" listener="#{doctorController.listar()}"/>
         </f:metadata>
 
@@ -38,7 +40,7 @@
                     <p:outputLabel value="#{doctor.celular}"/>
                 </p:column>
                 <p:column headerText="Editar">
-                    <p:commandButton value="Editar" actionListener="#{doctorController.findForEdit(doctor.idDoctor)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                    <p:commandButton value="Editar" rendered="#{loginController.doctor.idDoctor.equals(doctor.idDoctor)}" actionListener="#{doctorController.findForEdit(doctor.idDoctor)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
                 </p:column>
                 <p:column headerText="Ver información">
                     <p:commandButton value="Ver información" actionListener="#{doctorController.viewPage(doctor.idDoctor)}"/>

@@ -100,6 +100,10 @@ public class DoctorController implements Serializable{
         
     }
     
+    public boolean esDoctorAutorizado(int id){
+        return (this.doctor.getIdDoctor().intValue() == id)? true:false;
+    }
+    
     public boolean hasDatosFiscales(){
         return (this.doctor.getDatosFiscalesList().size()>0)? true:false;
     }

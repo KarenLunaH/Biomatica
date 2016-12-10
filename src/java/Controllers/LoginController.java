@@ -110,5 +110,13 @@ public class LoginController implements Serializable{
     public void setPsw(String psw) {
         this.psw = psw;
     }
+    
+    public void esDoctorLogeado() throws IOException {
+        String contextPath = FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath();
+        if (this.regresaLogeado()) {
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath + "/faces/views/Login.xhtml");
+        }
+    }
 
 }

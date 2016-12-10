@@ -11,6 +11,7 @@
 
     <ui:define name="content">
         <f:metadata>
+            <f:event type="preRenderView" listener="#{loginController.esDoctorLogeado()}"/>
             <f:event type="preRenderView" listener="#{doctorController.find()}"/>
         </f:metadata>
         
@@ -65,8 +66,8 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>     
-                <p:commandButton rendered="#{!doctorController.hasDatosFiscales()}" value="Registrar datos fiscales" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
-                <p:commandButton rendered="#{doctorController.hasDatosFiscales()}" value="Modificar datos fiscales" actionListener="#{doctorController.findDatosFiscalesEdit()}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and !doctorController.hasDatosFiscales()}" value="Registrar datos fiscales" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and doctorController.hasDatosFiscales()}" value="Modificar datos fiscales" actionListener="#{doctorController.findDatosFiscalesEdit()}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
             </h:form> 
         </p:fieldset>
         
