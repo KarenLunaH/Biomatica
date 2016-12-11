@@ -46,7 +46,7 @@
                     <p:commandButton value="Ver información" actionListener="#{doctorController.viewPage(doctor.idDoctor)}"/>
                 </p:column>                
             </p:dataTable>
-            <p:commandButton value="Registrar" actionListener="#{doctorController.limpiarFormulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+            <p:commandButton value="Registrar" icon="ui-icon-plus" actionListener="#{doctorController.limpiarFormulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
         </h:form> 
 
 
@@ -118,7 +118,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" actionListener="#{doctorController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
+                <p:commandButton value="Registrar" icon="ui-icon-plus" actionListener="#{doctorController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
             </h:form>
         </p:dialog>
         
@@ -186,7 +186,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Editar" actionListener="#{doctorController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
+                <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{doctorController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
             </h:form>
         </p:dialog>
 
