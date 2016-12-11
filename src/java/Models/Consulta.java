@@ -77,7 +77,7 @@ public class Consulta implements Serializable {
     @Column(name = "temperatura")
     private Long temperatura;
     @Column(name = "tensionArterial")
-    private Long tensionArterial;
+    private String tensionArterial;
     @Column(name = "frecuenciaCardiaca")
     private Integer frecuenciaCardiaca;
     @Column(name = "frecuenciaRespiratorio")
@@ -171,11 +171,11 @@ public class Consulta implements Serializable {
         this.temperatura = temperatura;
     }
 
-    public Long getTensionArterial() {
+    public String getTensionArterial() {
         return tensionArterial;
     }
 
-    public void setTensionArterial(Long tensionArterial) {
+    public void setTensionArterial(String tensionArterial) {
         this.tensionArterial = tensionArterial;
     }
 
