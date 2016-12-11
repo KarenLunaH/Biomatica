@@ -92,8 +92,8 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>     
-                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and !doctorController.hasDatosFiscales()}" value="Registrar datos fiscales" icon="ui-icon-circle-check" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
-                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and doctorController.hasDatosFiscales()}" value="Modificar datos fiscales" icon="ui-icon-pencil" actionListener="#{doctorController.findDatosFiscalesEdit()}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and !doctorController.hasDatosFiscales()}" value="Registrar datos fiscales" icon="fa fa-plus-circle" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+                <p:commandButton rendered="#{doctorController.esDoctorAutorizado(loginController.doctor.idDoctor.intValue()) and doctorController.hasDatosFiscales()}" value="Modificar datos fiscales" icon="fa fa-pencil" actionListener="#{doctorController.findDatosFiscalesEdit()}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
             </h:form> 
         </p:fieldset>
         
@@ -152,7 +152,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" icon="ui-icon-circle-check" actionListener="#{doctorController.crearDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form2"/>
+                <p:commandButton value="Registrar" icon="fa fa-plus-circle" actionListener="#{doctorController.crearDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form2"/>
             </h:form>
         </p:dialog>
         
@@ -211,7 +211,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Actualizar" icon="ui-icon-pencil" actionListener="#{doctorController.editDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form2"/>
+                <p:commandButton value="Actualizar" icon="fa fa-edit" actionListener="#{doctorController.editDatosFiscales()}"  oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form2"/>
             </h:form>
         </p:dialog>
         

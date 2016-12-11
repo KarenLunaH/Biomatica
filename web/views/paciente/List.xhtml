@@ -63,18 +63,18 @@
                     <f:facet name="header">
                         <h:outputText value="Editar" />
                     </f:facet>
-                    <p:commandButton value="Editar" actionListener="#{pacienteController.findForEdit(paciente.idPaciente)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                    <p:commandButton value="Editar" icon="fa fa-pencil-square-o" actionListener="#{pacienteController.findForEdit(paciente.idPaciente)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
                 </p:column>
                 
                 <p:column>
                     <f:facet name="header">
                         <h:outputText value="Ver detalles" />
                     </f:facet>
-                    <p:commandButton value="Ver detalles" actionListener="#{pacienteController.viewPage(paciente.idPaciente)}"/>
+                    <p:commandButton value="Ver detalles" icon="fa fa-info-circle" actionListener="#{pacienteController.viewPage(paciente.idPaciente)}"/>
                 </p:column>
                 
             </p:dataTable>
-            <p:commandButton value="Registrar" actionListener="#{pacienteController.limpiarformulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+            <p:commandButton value="Registrar" icon="fa fa-plus-circle" actionListener="#{pacienteController.limpiarformulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
         </h:form> 
 
 
@@ -223,7 +223,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" actionListener="#{pacienteController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
+                <p:commandButton value="Registrar" icon="fa fa-save" actionListener="#{pacienteController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
             </h:form>
 
         </p:dialog>
@@ -375,7 +375,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Actualizar" actionListener="#{pacienteController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
+                <p:commandButton value="Actualizar" icon="fa fa-pencil-square-o" actionListener="#{pacienteController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
             </h:form>
 
         </p:dialog>

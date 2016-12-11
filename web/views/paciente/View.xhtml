@@ -157,8 +157,8 @@
                             </p:column>
                         </p:row>
                      </p:panelGrid>    
-                     <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes" icon="ui-icon-plus" oncomplete="PF('widgetAntescedentes').show();" update=":dialogAntescedentes"/>
-                     <p:commandButton actionListener="#{pacienteController.findAntescedentesEdit()}" rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Modificar antescedentes" icon="ui-icon-pencil" oncomplete="PF('widgetAntescedentes2').show();" update=":dialogAntescedentes2"/>
+                     <p:commandButton rendered="#{!pacienteController.tieneRegistradoAntescedentes()}" value="Registrar antescedentes" icon="fa fa-plus-circle" oncomplete="PF('widgetAntescedentes').show();" update=":dialogAntescedentes"/>
+                     <p:commandButton actionListener="#{pacienteController.findAntescedentesEdit()}" rendered="#{pacienteController.tieneRegistradoAntescedentes()}" value="Modificar antescedentes" icon="fa fa-pencil-square-o" oncomplete="PF('widgetAntescedentes2').show();" update=":dialogAntescedentes2"/>
                 
                  </h:form>
             </p:tab>
@@ -211,7 +211,7 @@
                             <p:commandButton value="Comenzar consulta" actionListener="#{pacienteController.findCitaForEdit(consulta.idConsulta)}" oncomplete="PF('widgetConsulta2').show();" update=":dialogConsulta2" rendered="#{pacienteController.comenzarConsulta(consulta, loginController.doctor)}"/>
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Registrar" icon="ui-icon-circle-check" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
+                    <p:commandButton value="Registrar" icon="fa fa-calendar" oncomplete="PF('widgetConsulta').show();" update=":dialogConsulta"/>
 
                 </h:form>
             </p:tab>
@@ -221,10 +221,10 @@
                     <p:tabView value="#{pacienteController.paciente.imagenesList}" var="imagen">
                         <p:tab title="#{imagen.nombre}">
                             <p:graphicImage width="800px" height="400px" rendered="#{imagen.hasImage()}" library="imagenes" name="#{imagen.url}"/>
-                            <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{pacienteController.findForEditImagen(imagen.idImagen)}" oncomplete="PF('widgetImagen2').show();" update=":dialogImagen2"/>
+                            <p:commandButton value="Editar" icon="fa fa-pencil-square-o" actionListener="#{pacienteController.findForEditImagen(imagen.idImagen)}" oncomplete="PF('widgetImagen2').show();" update=":dialogImagen2"/>
                         </p:tab>
                     </p:tabView>
-                    <p:commandButton value="Registrar" icon="ui-icon-circle-check" actionListener="#{pacienteController.resetUploaded()}" oncomplete="PF('widgetImagen').show();" update=":dialogImagen"/>
+                    <p:commandButton value="Registrar" icon="fa fa-file-image-o" actionListener="#{pacienteController.resetUploaded()}" oncomplete="PF('widgetImagen').show();" update=":dialogImagen"/>
                 </h:form>
             </p:tab>
             
@@ -257,14 +257,14 @@
                             <p:outputLabel value="#{medicamento.contraIndicaciones}"/>
                         </p:column>  
                         <p:column headerText="Editar" exportable="false">
-                         <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{pacienteController.findForEditMedicamento(medicamento.idMedicamento)}" oncomplete="PF('widgetMedicamento2').show();" update=":dialogMedicamento2"/>
+                         <p:commandButton value="Editar" icon="fa fa-pencil-square-o" actionListener="#{pacienteController.findForEditMedicamento(medicamento.idMedicamento)}" oncomplete="PF('widgetMedicamento2').show();" update=":dialogMedicamento2"/>
                          <!-- los dos puntos(:) significan acceder a un formulario fuera de este formulario!-->
                         </p:column>
                         <p:column headerText="Eliminar" exportable="false">
-                            <p:commandButton value="Eliminar" icon="ui-icon-circle-close" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="accordion:medicamentoForm"/>
+                            <p:commandButton value="Eliminar" icon="fa fa-trash" actionListener="#{pacienteController.eliminarMedicamento(medicamento)}" update="accordion:medicamentoForm"/>
                         </p:column>
                     </p:dataTable> 
-                    <p:commandButton value="Registrar" icon="ui-icon-circle-check" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
+                    <p:commandButton value="Registrar" icon="fa fa-plus-circle" oncomplete="PF('widgetMedicamento').show();" update=":dialogMedicamento"/>
                 </h:form>
             </p:tab>
         </p:accordionPanel>
@@ -310,7 +310,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" icon="ui-icon-circle-check" actionListener="#{pacienteController.crearMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
+                <p:commandButton value="Registrar" icon="fa fa-save" actionListener="#{pacienteController.crearMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
             </h:form>
         </p:dialog>
         
@@ -358,7 +358,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{pacienteController.editarMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento2').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
+                <p:commandButton value="Editar" icon="fa fa-save" actionListener="#{pacienteController.editarMedicamento()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetMedicamento2').hide();" update=":accordion:medicamentoForm:medicamentoTable"/>
             </h:form>
         </p:dialog>
         
@@ -393,7 +393,7 @@
                         </p:column>  
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Create" icon="ui-icon-circle-check" actionListener="#{pacienteController.crearAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes').hide();" update=":accordion:antescedentesForm"/>
+                <p:commandButton value="Create" icon="fa fa-plus-circle" actionListener="#{pacienteController.crearAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes').hide();" update=":accordion:antescedentesForm"/>
             </h:form>
         </p:dialog>
         
@@ -428,7 +428,7 @@
                         </p:column>  
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Edit" icon="ui-icon-pencil" actionListener="#{pacienteController.editAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes2').hide();" update=":accordion:antescedentesForm"/>
+                <p:commandButton value="Edit" icon="fa fa-pencil-square-o" actionListener="#{pacienteController.editAntescedentes()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetAntescedentes2').hide();" update=":accordion:antescedentesForm"/>
             </h:form>
         </p:dialog>
         
@@ -449,7 +449,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <h:commandButton value="Subir imagen" actionListener="#{pacienteController.crearImagen()}"/>
+                <p:commandButton value="Subir imagen" icon="fa fa-file-image-o " actionListener="#{pacienteController.crearImagen()}"/>
             </h:form>
         </p:dialog>
         
@@ -470,7 +470,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <h:commandButton value="Actualizar imagen" actionListener="#{pacienteController.editarImagen()}"/>
+                <p:commandButton value="Actualizar imagen" icon="fa fa-save" actionListener="#{pacienteController.editarImagen()}"/>
             </h:form>
         </p:dialog>
         
@@ -494,7 +494,7 @@
                         <p:column><p:calendar pattern="MM/dd/yyyy HH:mm" mindate="#{pacienteController.consulta.fechaHoraInicio}"  id="FechaFi" value="#{pacienteController.consulta.fechaHoraFin}" required="true" label="Fin de la consulta"/></p:column>
                     </p:row>                   
                 </p:panelGrid>
-                <p:commandButton value="Registrar consulta" icon="ui-icon-check" actionListener="#{pacienteController.crearCita(loginController.doctor)}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();" update=":accordion:consultasForm"/>
+                <p:commandButton value="Registrar consulta" icon="fa fa-plus-circle" actionListener="#{pacienteController.crearCita(loginController.doctor)}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta').hide();" update=":accordion:consultasForm"/>
             </h:form>
         </p:dialog>
 
@@ -561,7 +561,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar consulta" icon="ui-icon-check" actionListener="#{pacienteController.editarCita()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta2').hide();" update=":accordion:consultasForm"/>
+                <p:commandButton value="Registrar consulta" icon="fa fa-save" actionListener="#{pacienteController.editarCita()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetConsulta2').hide();" update=":accordion:consultasForm"/>
             </h:form>
         </p:dialog>
         

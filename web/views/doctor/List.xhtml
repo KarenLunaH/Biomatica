@@ -40,13 +40,13 @@
                     <p:outputLabel value="#{doctor.celular}"/>
                 </p:column>
                 <p:column headerText="Editar">
-                    <p:commandButton value="Editar" rendered="#{loginController.doctor.idDoctor.equals(doctor.idDoctor)}" actionListener="#{doctorController.findForEdit(doctor.idDoctor)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
+                    <p:commandButton value="Editar" icon="fa fa-pencil" rendered="#{loginController.doctor.idDoctor.equals(doctor.idDoctor)}" actionListener="#{doctorController.findForEdit(doctor.idDoctor)}" oncomplete="PF('widgetDatos2').show();" update=":dialogDatos2"/>
                 </p:column>
                 <p:column headerText="Ver información">
-                    <p:commandButton value="Ver información" actionListener="#{doctorController.viewPage(doctor.idDoctor)}"/>
+                    <p:commandButton value="Ver información" icon="fa fa-info-circle" actionListener="#{doctorController.viewPage(doctor.idDoctor)}"/>
                 </p:column>                
             </p:dataTable>
-            <p:commandButton value="Registrar" icon="ui-icon-plus" actionListener="#{doctorController.limpiarFormulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
+            <p:commandButton value="Registrar" icon="fa fa-plus-circle" actionListener="#{doctorController.limpiarFormulario()}" oncomplete="PF('widgetDatos').show();" update=":dialogDatos"/>
         </h:form> 
 
 
@@ -118,7 +118,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Registrar" icon="ui-icon-plus" actionListener="#{doctorController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
+                <p:commandButton value="Registrar" icon="fa fa-save" actionListener="#{doctorController.crear()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos').hide();" update=":form:data"/>
             </h:form>
         </p:dialog>
         
@@ -186,7 +186,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Editar" icon="ui-icon-pencil" actionListener="#{doctorController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
+                <p:commandButton value="Editar" icon="fa fa-pencil" actionListener="#{doctorController.editar()}" oncomplete="if (args &amp;&amp; !args.validationFailed) PF('widgetDatos2').hide();" update=":form:data"/>
             </h:form>
         </p:dialog>
 
