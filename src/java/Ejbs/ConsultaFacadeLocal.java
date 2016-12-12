@@ -6,6 +6,7 @@
 package Ejbs;
 
 import Models.Consulta;
+import Models.Doctor;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,7 @@ public interface ConsultaFacadeLocal {
     List<Consulta> findRange(int[] range);
 
     int count();
+    
+        List<Consulta> proximasConsultas(Doctor d);
     
 }

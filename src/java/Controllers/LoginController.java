@@ -44,7 +44,7 @@ public class LoginController implements Serializable{
             if (aux != null) {
                 this.doctor = aux;
                 this.email = this.psw = "";
-                FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath);
+                FacesContext.getCurrentInstance().getExternalContext().redirect(contextPath+"/faces/index.xhtml");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No tienes acceso al sistema."));
             }
@@ -131,6 +131,18 @@ public class LoginController implements Serializable{
            }
         }
         return null;
+    }
+    
+    public String welcomeMessage(){
+        String s = "";
+        if(this.regresaLogeado()){
+            if(this.doctor.getPrefijo().equals("Dra.")){
+                s="Bienvenida a Biomática Dra. "+this.doctor.nombreCompleto();
+            }else{
+                s="Bienvenido a Biomática Dr. "+this.doctor.nombreCompleto();
+            }
+        }
+        return s;
     }
 
 }

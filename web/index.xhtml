@@ -10,11 +10,33 @@
     </ui:define>
 
     <ui:define name="content">
+        
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{loginController.esDoctorLogeado()}"/>
+            <f:event type="preRenderView" listener="#{doctorController.cargarProximasConsultas(loginController.doctor)}"/>
+        </f:metadata>
+        
         <h:outputScript name="assets/js/jquery.js"/>
         
         <div class="container">
-            <h1>    Bienvenido a Biomatica </h1>
+            <h1>#{loginController.welcomeMessage()}</h1>
         </div>
+        
+        <h:form>
+            <p:dataTable paginator="true" rows="10" value="#{doctorController.proximasConsultas}" var="consulta">
+                <f:facet name="header">
+                    Tus próximas consultas
+                </f:facet>
+                <p:column headerText="Fecha y hora">
+                    <p:outputLabel value="#{consulta.fechaHoraInicio}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="Con el paciente: ">
+                    <p:outputLabel value="#{consulta.idPaciente}"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
         
     </ui:define>
 </ui:composition>

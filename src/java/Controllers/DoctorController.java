@@ -5,10 +5,12 @@
  */
 package Controllers;
 
+import Ejbs.ConsultaFacadeLocal;
 import Ejbs.DatosFiscalesFacadeLocal;
 import Ejbs.DireccionFacadeLocal;
 import Ejbs.DoctorFacadeLocal;
 import Models.Antescedentes;
+import Models.Consulta;
 import Models.DatosFiscales;
 import Models.Direccion;
 import Models.Doctor;
@@ -44,6 +46,7 @@ public class DoctorController implements Serializable{
     private Doctor doctor;
     private List<Doctor> doctores;
     private DatosFiscales datosFiscales,datosFiscalesConsulta;
+    private List<Consulta> proximasConsultas;
     
     @EJB
     private DatosFiscalesFacadeLocal datosFiscalesEjb;
@@ -51,11 +54,15 @@ public class DoctorController implements Serializable{
     @EJB
     private DireccionFacadeLocal direccionEjb;
     
+    @EJB
+    private ConsultaFacadeLocal consultaEjb;
+    
     @PostConstruct
     public void init(){
         doctor = new Doctor();
         doctores = new ArrayList<Doctor>();
         datosFiscales = new DatosFiscales();
+        proximasConsultas = new ArrayList<Consulta>();
     }
     
     public void listar(){
@@ -202,6 +209,24 @@ public class DoctorController implements Serializable{
         this.doctor.getDatosFiscalesList().set(0, datosFiscales);
         this.doctorEJB.edit(doctor);
         this.datosFiscalesConsulta = this.doctor.getDatosFiscalesList().get(0);
+    }
+
+    /**
+     * @return the proximasConsultas
+     */
+    public List<Consulta> getProximasConsultas() {
+        return proximasConsultas;
+    }
+
+    /**
+     * @param proximasConsultas the proximasConsultas to set
+     */
+    public void setProximasConsultas(List<Consulta> proximasConsultas) {
+        this.proximasConsultas = proximasConsultas;
+    }
+    
+    public void cargarProximasConsultas(Doctor d){
+        this.proximasConsultas = this.consultaEjb.proximasConsultas(d);
     }
     
     
