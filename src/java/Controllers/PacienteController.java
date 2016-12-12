@@ -142,6 +142,7 @@ public class PacienteController implements Serializable{
     }
     
     public void resetUploaded(){
+        this.imagen.setNombre("");
         this.uploaded = false;
     }
     

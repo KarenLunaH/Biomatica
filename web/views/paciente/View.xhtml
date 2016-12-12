@@ -449,7 +449,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Subir imagen" icon="fa fa-file-image-o " actionListener="#{pacienteController.crearImagen()}"/>
+                <p:commandButton ajax="false" value="Subir imagen" icon="fa fa-file-image-o" actionListener="#{pacienteController.crearImagen()}"/>
             </h:form>
         </p:dialog>
         
@@ -470,7 +470,7 @@
                         </p:column>
                     </p:row>
                 </p:panelGrid>
-                <p:commandButton value="Actualizar imagen" icon="fa fa-save" actionListener="#{pacienteController.editarImagen()}"/>
+                <p:commandButton ajax="false" value="Actualizar imagen" icon="fa fa-save" actionListener="#{pacienteController.editarImagen()}"/>
             </h:form>
         </p:dialog>
         
