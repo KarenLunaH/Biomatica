@@ -22,24 +22,15 @@
                     Pacientes
                 </f:facet>      
                 
-                <p:column filterBy="#{paciente.apellidoPaterno}">
-                    <f:facet name="header">
-                        <h:outputText value="Nombre" />
-                    </f:facet>
+                <p:column headerText="Nombre" filterBy="#{paciente.nombres} #{paciente.apellidoPaterno} #{paciente.apellidoMaterno}" filterMatchMode="contains">
                     <p:outputLabel value="#{paciente}"/>
                 </p:column>   
                 
-                <p:column filterBy="#{paciente.curp}">
-                    <f:facet name="header">
-                        <h:outputText value="CURP" />
-                    </f:facet>
+                <p:column headerText="CURP" filterBy="#{paciente.curp}">
                     <p:outputLabel value="#{paciente.curp}"/>
                 </p:column>  
                 
-                <p:column filterBy="#{paciente.rfc}">
-                    <f:facet name="header">
-                        <h:outputText value="RFC" />
-                    </f:facet>
+                <p:column headerText="RFC" filterBy="#{paciente.rfc}">
                     <p:outputLabel value="#{paciente.rfc}"/>
                 </p:column>
                 
